@@ -6,7 +6,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 export default function Features() {
   return (
     <section
-      className="flat-spacing-7 flat-iconbox wow fadeInUp"
+      className="flat-spacing-7 flat-iconbox wow fadeInUp pt-5"
       data-wow-delay="0s"
     >
       <div className="container">

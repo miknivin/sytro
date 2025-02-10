@@ -3,11 +3,11 @@ import { setIsAuthenticated, setLoading, setUser } from "../features/userSlice";
 
 export const userApi = createApi({
   reducerPath: "userApi",
-  baseQuery: fetchBaseQuery({ baseUrl: "/api/v1" }),
+  baseQuery: fetchBaseQuery({ baseUrl: "/api" }),
   tagTypes: ["User", "AdminUsers", "AdminUser"],
   endpoints: (builder) => ({
     getMe: builder.query({
-      query: () => `/me`,
+      query: () => `auth/getMe`,
       transformResponse: (result) => result.user,
       async onQueryStarted(args, { dispatch, queryFulfilled }) {
         try {
@@ -17,7 +17,7 @@ export const userApi = createApi({
           dispatch(setLoading(false));
         } catch (error) {
           dispatch(setLoading(false));
-          console.log(error);
+       //   console.log(error);
         }
       },
       providesTags: ["User"],

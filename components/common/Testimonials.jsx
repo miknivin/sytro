@@ -6,17 +6,20 @@ import Link from "next/link";
 import { Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 
-export default function Testimonials() {
+export default function Testimonials({isTitle}) {
   return (
     <section
       className="flat-spacing-5 pt_0 flat-testimonial"
       style={{ maxWidth: "100vw", overflow: "hidden" }}
     >
-      <div className="container">
-        <div className="flat-title wow fadeInUp" data-wow-delay="0s">
-          <span className="title">Happy Clients</span>
-          <p className="sub-title">Hear what they say about us</p>
-        </div>
+      <div style={{ padding: "0 20px" }} className="container px-2.5">
+        {isTitle&&(
+          <div className="flat-title wow fadeInUp" data-wow-delay="0s">
+            <span className="title">Happy Clients</span>
+            <p className="sub-title">Hear what they say about us</p>
+          </div>
+        )}
+        
         <div className="wrap-carousel">
           <Swiper
             dir="ltr"
@@ -63,7 +66,7 @@ export default function Testimonials() {
                     <div className="name">{testimonial.name}</div>
                     <div className="metas">{testimonial.metas}</div>
                   </div>
-                  <div className="product">
+                  {/* <div className="product">
                     <div className="image">
                       <a href={`#`}>
                         <Image
@@ -85,7 +88,7 @@ export default function Testimonials() {
                     <a href={`#`} className="">
                       <i className="icon-arrow1-top-left" />
                     </a>
-                  </div>
+                  </div> */}
                 </div>
               </SwiperSlide>
             ))}

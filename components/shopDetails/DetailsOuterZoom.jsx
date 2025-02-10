@@ -50,12 +50,12 @@ export default function DetailsOuterZoom({ product = allProducts[0] }) {
         <div className="container">
           <div className="row">
             <div className="col-md-6">
-              <div className="tf-product-media-wrap sticky-top">
+              <div className="tf-product-media-wrap sticky-top h-100">
                 <div className="thumbs-slider">
                   <Slider1ZoomOuter
                     handleColor={handleColor}
                     currentColor={currentColor.value}
-                    firstImage={product.imgSrc}
+                    firstImage={product?.images}
                   />
                 </div>
               </div>
@@ -66,10 +66,10 @@ export default function DetailsOuterZoom({ product = allProducts[0] }) {
                 <div className="tf-product-info-list other-image-zoom">
                   <div className="tf-product-info-title">
                     <h5>
-                      {product.title ? product.title : "Cotton jersey top"}
+                      {product.name ? product.name : "Cotton jersey top"}
                     </h5>
                   </div>
-                  <div className="tf-product-info-badges">
+                  {/* <div className="tf-product-info-badges">
                     <div className="badges">Best seller</div>
                     <div className="product-status-content">
                       <i className="icon-lightning" />
@@ -77,25 +77,20 @@ export default function DetailsOuterZoom({ product = allProducts[0] }) {
                         Selling fast! 56 people have this in their carts.
                       </p>
                     </div>
-                  </div>
+                  </div> */}
                   <div className="tf-product-info-price">
                     <div className="price-on-sale">
-                      ${product.price.toFixed(2)}
+                      ${product.offer.toFixed(2)}
                     </div>
-
-                    <div className="compare-at-price">
-                      ${currentColor.oldPrice.toFixed(2)}
-                    </div>
-
                     <div className="badges-on-sale">
-                      <span>20</span>% OFF
+                      <span>{(1-product.offer/product.actualPrice).toFixed(2)*100}</span>% OFF 
                     </div>
                   </div>
-                  <div className="tf-product-info-liveview">
+                  {/* <div className="tf-product-info-liveview">
                     <div className="liveview-count">20</div>
                     <p className="fw-6">People are viewing this right now</p>
-                  </div>
-                  <div className="tf-product-info-countdown">
+                  </div> */}
+                  {/* <div className="tf-product-info-countdown">
                     <div className="countdown-wrap">
                       <div className="countdown-title">
                         <i className="icon-time tf-ani-tada" />
@@ -107,8 +102,8 @@ export default function DetailsOuterZoom({ product = allProducts[0] }) {
                         </div>
                       </div>
                     </div>
-                  </div>
-                  <div className="tf-product-info-variant-picker">
+                  </div> */}
+                  {/* <div className="tf-product-info-variant-picker">
                     <div className="variant-picker-item">
                       <div className="variant-picker-label">
                         Color:
@@ -179,17 +174,17 @@ export default function DetailsOuterZoom({ product = allProducts[0] }) {
                         ))}
                       </form>
                     </div>
-                  </div>
+                  </div> */}
                   {/* ------------- */}
                   <div className="tf-product-info-variant-picker">
                     <div className="variant-picker-item">
-                      <div className="variant-picker-label">
+                      {/* <div className="variant-picker-label">
                         Color:
                         <span className="fw-6 variant-picker-label-value">
                           {currentColor.value}
                         </span>
-                      </div>
-                      <form className="variant-picker-values">
+                      </div> */}
+                      {/* <form className="variant-picker-values">
                         {colors.map((color) => (
                           <React.Fragment key={color.id}>
                             <input
@@ -212,11 +207,11 @@ export default function DetailsOuterZoom({ product = allProducts[0] }) {
                             </label>
                           </React.Fragment>
                         ))}
-                      </form>
+                      </form> */}
                     </div>
                     <div className="variant-picker-item">
                       {/* kids bag only */}
-                      <div className="d-flex justify-content-between align-items-center gap-4">
+                      <div style={{gap:'15px'}} className="d-flex justify-content-between align-items-center ">
                         <a
                           href="#find_size"
                           data-bs-toggle="modal"
@@ -255,7 +250,7 @@ export default function DetailsOuterZoom({ product = allProducts[0] }) {
                           -{" "}
                         </span>
                         <span className="tf-qty-price">
-                          ${(product.price * quantity).toFixed(2)}
+                          ${(product.offer * quantity).toFixed(2)}
                         </span>
                       </a>
                       <a

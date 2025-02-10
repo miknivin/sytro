@@ -1,34 +1,105 @@
 "use client";
-import React from "react";
-import Link from "next/link";
+import React, { useState } from "react";
+import { useRegisterMutation } from "@/redux/api/authApi"; // Adjust import as needed
+import Swal from "sweetalert2";
+import "bootstrap/dist/js/bootstrap.bundle.min.js";
+import { Modal } from "bootstrap";
+
 export default function Register() {
+  const [register, { isLoading, error }] = useRegisterMutation();
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+  });
+  const [errorMessage, setErrorMessage] = useState("");
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const isValidEmail = (email) => {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  };
+
+  // Password Validation (Min 8 chars, at least one letter & one number)
+  const isValidPassword = (password) => {
+    return /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(password);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const { firstName, lastName, email, password } = formData;
+    
+    if (!firstName.trim() || !lastName.trim()) {
+      setErrorMessage("Name is required.");
+      return;
+    }
+
+    if (!isValidEmail(email)) {
+      setErrorMessage("Enter a valid email address.");
+      return;
+    }
+
+    if (!isValidPassword(password)) {
+      setErrorMessage("Password must be at least 8 characters long and contain at least one letter and one number.");
+      return;
+    }
+    try {
+      await register({
+        name: `${firstName.trim()} ${lastName.trim()}`, // Concatenated name
+        email,
+        password,
+      }).unwrap();
+     
+
+      // Close modal
+      const modalElement = document.getElementById("register");
+      if (modalElement) {
+        const modalInstance = Modal.getInstance(modalElement) || new Modal(modalElement);
+        modalInstance.hide();
+      }
+
+      Swal.fire({
+        icon: "success",
+        title: "Registration Successful",
+        text: "You have been registered successfully!",
+        confirmButtonColor: "#3085d6",
+      });
+
+      // Reset form fields
+      setFormData({ firstName: "", lastName: "", email: "", password: "" });
+    } catch (err) {
+      console.error(err);
+      if (err?.data?.error?.includes("duplicate key error") && err?.data?.error?.includes("email")) {
+        setErrorMessage("Email already exists. Please use another email.");
+      } else {
+        setErrorMessage("An error occurred. Please try again.");
+      }
+    }
+  };
+
   return (
-    <div
-      className="modal modalCentered fade form-sign-in modal-part-content"
-      id="register"
-    >
+    <div className="modal modalCentered fade form-sign-in modal-part-content" id="register">
       <div className="modal-dialog modal-dialog-centered">
         <div className="modal-content">
           <div className="header">
             <div className="demo-title">Register</div>
-            <span
-              className="icon-close icon-close-popup"
-              data-bs-dismiss="modal"
-            />
+            <span className="icon-close icon-close-popup" data-bs-dismiss="modal" />
           </div>
           <div className="tf-login-form">
-            <form onSubmit={(e) => e.preventDefault()} className="">
+            <form onSubmit={handleSubmit}>
               <div className="tf-field style-1">
                 <input
                   className="tf-field-input tf-input"
                   placeholder=" "
                   type="text"
                   required
-                  name=""
+                  name="firstName"
+                  value={formData.firstName}
+                  onChange={handleChange}
                 />
-                <label className="tf-field-label" htmlFor="">
-                  First name
-                </label>
+                <label className="tf-field-label">First name</label>
               </div>
               <div className="tf-field style-1">
                 <input
@@ -36,24 +107,23 @@ export default function Register() {
                   placeholder=" "
                   type="text"
                   required
-                  name=""
+                  name="lastName"
+                  value={formData.lastName}
+                  onChange={handleChange}
                 />
-                <label className="tf-field-label" htmlFor="">
-                  Last name
-                </label>
+                <label className="tf-field-label">Last name</label>
               </div>
               <div className="tf-field style-1">
                 <input
                   className="tf-field-input tf-input"
                   placeholder=" "
                   type="email"
-                  autoComplete="abc@xyz.com"
                   required
-                  name=""
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
                 />
-                <label className="tf-field-label" htmlFor="">
-                  Email *
-                </label>
+                <label className="tf-field-label">Email *</label>
               </div>
               <div className="tf-field style-1">
                 <input
@@ -61,34 +131,32 @@ export default function Register() {
                   placeholder=" "
                   type="password"
                   required
-                  name=""
-                  autoComplete="current-password"
+                  name="password"
+                  value={formData.password}
+                  onChange={handleChange}
                 />
-                <label className="tf-field-label" htmlFor="">
-                  Password *
-                </label>
+                <label className="tf-field-label">Password *</label>
               </div>
+              {errorMessage && <p className="error-message">{errorMessage}</p>}
               <div className="bottom">
                 <div className="w-100">
-                  <Link
-                    href={`/register`}
+                  <button
+                    type="submit"
                     className="tf-btn btn-fill animate-hover-btn radius-3 w-100 justify-content-center"
+                    disabled={isLoading}
                   >
-                    <span>Register</span>
-                  </Link>
+                    {isLoading ? "Registering..." : "Register"}
+                  </button>
                 </div>
                 <div className="w-100">
-                  <a
-                    href="#login"
-                    data-bs-toggle="modal"
-                    className="btn-link fw-6 w-100 link"
-                  >
+                  <a href="#login" data-bs-toggle="modal" className="btn-link fw-6 w-100 link">
                     Already have an account? Log in here
                     <i className="icon icon-arrow1-top-left" />
                   </a>
                 </div>
               </div>
             </form>
+            {error && <p className="error-message text-danger">{error.data?.message}</p>}
           </div>
         </div>
       </div>

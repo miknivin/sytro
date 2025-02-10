@@ -18,7 +18,7 @@ export async function GET(req, { params }) {
     const productById = await products.findById(productId)
       .populate({
         path: 'reviews.user',
-        select: 'name email avatar'  // Select only the fields you need
+        select: 'name email avatar'  
       })
       .populate({
         path: 'user',

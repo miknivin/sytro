@@ -1,11 +1,13 @@
+"use client;"
+
 import React from "react";
 import Nav from "./Nav";
 import Image from "next/image";
 import Link from "next/link";
-import LanguageSelect from "../common/LanguageSelect";
-import CurrencySelect from "../common/CurrencySelect";
 import CartLength from "../common/CartLength";
 import WishlistLength from "../common/WishlistLength";
+import { useSelector } from "react-redux";
+import UserIcon from "../common/UserIcon";
 export default function Header4() {
   return (
     <header id="header" className="header-default header-style-2">
@@ -97,13 +99,7 @@ export default function Header4() {
                   </a>
                 </li>
                 <li className="nav-account">
-                  <a
-                    href="#login"
-                    data-bs-toggle="modal"
-                    className="nav-icon-item"
-                  >
-                    <i className="icon icon-account" />
-                  </a>
+                 <UserIcon/>
                 </li>
                 <li className="nav-wishlist">
                   <Link href={`/wishlist`} className="nav-icon-item">
@@ -141,7 +137,7 @@ export default function Header4() {
                     href="https://themeforest.net/item/ecomus-ultimate-html5-template/53417990?s_rank=3"
                     className="item-link"
                   >
-                    Buy now
+                    Contact
                   </a>
                 </li>
               </ul>

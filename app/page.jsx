@@ -26,11 +26,12 @@ export default function Home() {
       <Header4 />
       <Hero />
       <Marquee />
-      <Categories />
+      {/* <Categories /> */}
       <Products />
+  
       <Testimonials />
       {/* <Lookbook /> */}
-      <Categories2 />
+      {/* <Categories2 /> */}
       {/* <Brands /> */}
       {/* <ShopGram /> */}
       <Features />

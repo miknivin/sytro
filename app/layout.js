@@ -1,7 +1,6 @@
-"use client";
+"use client"
 
 import { useEffect, useState } from "react";
-
 import "../public/scss/main.scss";
 import "photoswipe/dist/photoswipe.css";
 import "rc-slider/assets/index.css";
@@ -30,7 +29,9 @@ import ShareModal from "@/components/modals/ShareModal";
 import ScrollTop from "@/components/common/ScrollTop";
 import { Provider } from "react-redux";
 import {store} from '../redux/store.js'
-
+import { useGetMeQuery } from "@/redux/api/userApi.js";
+import { useSelector } from "react-redux";
+import FullScreenSpinner from "@/components/common/FullScreenSpinner"
 export default function RootLayout({ children }) {
   const pathname = usePathname();
   useEffect(() => {
@@ -164,39 +165,57 @@ export default function RootLayout({ children }) {
 
   return (
     <html lang="en">
-      <body className="preload-wrapper">
-        <div className="preload preload-container" id="preloader">
-          <div className="preload-logo">
-            <div className="spinner"></div>
-          </div>
-        </div>{" "}
-        <Provider store={store}>
-          <Context>
-            <div id="wrapper">{children}</div>
-            {/* <RtlToggle /> */}
-            <HomesModal /> <QuickView />
-            <QuickAdd />
-            <ProductSidebar />
-            {/* <Compare /> */}
-            <ShopCart />
-            <AskQuestion />
-            <BlogSidebar />
-            {/* <ColorCompare /> */}
-            <DeliveryReturn />
-            <FindSize />
-            <Login />
-            <MobileMenu />
-            <Register />
-            <ResetPass />
-            <SearchModal />
-            <ToolbarBottom />
-            <ToolbarShop />
-            <NewsletterModal />
-            <ShareModal />{" "}
-          </Context>
-          <ScrollTop />
-        </Provider>
-      </body>
-    </html>
+    <body className="preload-wrapper">
+      <div className="preload preload-container" id="preloader">
+        <div className="preload-logo">
+          <div className="spinner"></div>
+        </div>
+      </div>
+      <Provider store={store}>
+        <Context>
+          <ReduxConsumer>{children}</ReduxConsumer>
+        </Context>
+        <ScrollTop />
+      </Provider>
+    </body>
+  </html>
+  );
+}
+
+function ReduxConsumer({ children }) {
+  const { isLoading } = useGetMeQuery();
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+ 
+  if(isLoading){
+    return(<FullScreenSpinner/>)
+  }
+
+  return (
+    <div id="wrapper">
+      {children}
+      <HomesModal />
+      <QuickView />
+      <QuickAdd />
+      <ProductSidebar />
+      <ShopCart />
+      <AskQuestion />
+      <BlogSidebar />
+      <DeliveryReturn />
+      <FindSize />
+      {!isAuthenticated&&(
+        <>
+        <Login />
+        <Register/>
+        </>
+      )}
+ 
+      <MobileMenu />  
+      <ResetPass />
+      <SearchModal />
+      <ToolbarBottom />
+      <ToolbarShop />
+      <NewsletterModal />
+      <ShareModal />
+    </div>
   );
 }
