@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { useEffect, useState } from "react";
 import "../public/scss/main.scss";
@@ -37,7 +37,7 @@ export default function RootLayout({ children }) {
   useEffect(() => {
     if (typeof window !== "undefined") {
       // Import the script only on the client side
-      import("bootstrap/dist/js/bootstrap.esm").then(() => {
+       import("bootstrap/dist/js/bootstrap.esm").then(() => {
         // Module is imported, you can access any exported functionality if
       });
     }

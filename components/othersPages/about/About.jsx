@@ -9,9 +9,9 @@ export default function About() {
             <div className="tf-image-wrap">
               <Image
                 className="lazyload w-100"
-                data-src="/images/collections/collection-69.jpg"
+                data-src="/images/collections/collection-69.webp"
                 alt="collection-img"
-                src="/images/collections/collection-69.jpg"
+                src="/images/collections/collection-69.webp"
                 width={600}
                 height={499}
               />
@@ -60,7 +60,7 @@ export default function About() {
                 <div className="img-style">
                   <Image
                     className="lazyload"
-                    src="/images/collections/collection-70.jpg"
+                    src="/images/collections/collection-70.webp"
                     data-=""
                     alt="img-slider"
                     width={400}

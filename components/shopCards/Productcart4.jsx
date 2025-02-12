@@ -117,7 +117,7 @@ export default function Productcard4({ product }) {
         )} */}
       </div>
       <div className="card-product-info">
-        <Link href={`/product-detail/${product.id}`} className="title link">
+        <Link href={`/product-detail/${product._id}`} className="title link">
           {product.name}
         </Link>
         <span className="price">₹{product.actualPrice.toFixed(2)}</span>

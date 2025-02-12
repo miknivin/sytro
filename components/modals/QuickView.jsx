@@ -8,7 +8,8 @@ import { Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import Quantity from "../shopDetails/Quantity";
 import { colors, sizeOptions } from "@/data/singleProductOptions";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { Modal } from "bootstrap";
 
 export default function QuickView() {
   const {
@@ -22,20 +23,25 @@ export default function QuickView() {
   } = useContextElement();
   const [currentColor, setCurrentColor] = useState(colors[0]);
   const [currentSize, setCurrentSize] = useState(sizeOptions[0]);
+  const [isClient, setIsClient] = useState(false);
 
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  if (!isClient) return null;
   const openModalSizeChoice = () => {
-    const bootstrap = require("bootstrap"); // dynamically import bootstrap
-    var myModal = new bootstrap.Modal(document.getElementById("find_size"), {
+    const myModal = new Modal(document?.getElementById("find_size"), {
       keyboard: false,
     });
-
+  
     myModal.show();
-    document
-      .getElementById("find_size")
-      .addEventListener("hidden.bs.modal", () => {
-        myModal.hide();
-      });
-    const backdrops = document.querySelectorAll(".modal-backdrop");
+  
+    document?.getElementById("find_size").addEventListener("hidden.bs.modal", () => {
+      myModal.hide();
+    });
+  
+    const backdrops = document?.querySelectorAll(".modal-backdrop");
     if (backdrops.length > 1) {
       // Apply z-index to the last backdrop
       const lastBackdrop = backdrops[backdrops.length - 1];

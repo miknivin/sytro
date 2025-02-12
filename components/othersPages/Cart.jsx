@@ -97,7 +97,7 @@ export default function Cart() {
                         cart-data-title="Price"
                       >
                         <div className="cart-price">
-                          ${elm.price.toFixed(2)}
+                          ${elm?.price?.toFixed(2)}
                         </div>
                       </td>
                       <td

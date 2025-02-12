@@ -991,7 +991,7 @@ export const testimonials16 = [
     quoteSrc: "/images/item/quote.svg",
     rating: 5,
     text: `The durability of their products is simply unmatched in the market. I've taken my Sytro travel bag across three continents and countless cities, and it still performs like new. The water-resistant fabric has protected my belongings through monsoons in Mumbai and snowfall in Switzerland. Their attention to detail, from reinforced corners to smooth-rolling wheels, makes every journey hassle-free.`,
-    authorImg: "/images/item/tets4.jpg",
+    authorImg: "/images/item/tets5.jpg",
     authorName: "Hiran",
   },
 ];

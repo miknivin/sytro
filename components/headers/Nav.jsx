@@ -124,17 +124,17 @@ export default function Nav({ isArrow = true, textColor = "", Linkfs = "" }) {
         </div> */}
       </li>
       <li className="menu-item position-relative">
-        <a
-          href="#"
+        <Link
+          href="/about-us"
           className={`item-link ${Linkfs} ${textColor}  ${
             isMenuActive(pages) ? "activeMenu" : ""
           }`}
         >
           About
           {/* <i className="icon icon-arrow-down" /> */}
-        </a>
+        </Link>
       </li>
-      <li className="menu-item">
+      {/* <li className="menu-item">
         <a
           href="#"
           className={`item-link ${Linkfs} ${textColor} ${
@@ -227,7 +227,7 @@ export default function Nav({ isArrow = true, textColor = "", Linkfs = "" }) {
             </div>
           </div>
         </div>
-      </li>
+      </li> */}
       <li className="menu-item">
         <a
           href="#"

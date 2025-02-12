@@ -1,5 +1,7 @@
-export const openCartModal = () => {
-  const bootstrap = require("bootstrap"); // dynamically import bootstrap
+export const openCartModal = async () => {
+  const bootstrap = await import("bootstrap");
+
+  // Close any open modals
   const modalElements = document.querySelectorAll(".modal.show");
   modalElements.forEach((modal) => {
     const modalInstance = bootstrap.Modal.getInstance(modal);
@@ -8,7 +10,6 @@ export const openCartModal = () => {
     }
   });
 
-  
   // Close any open offcanvas
   const offcanvasElements = document.querySelectorAll(".offcanvas.show");
   offcanvasElements.forEach((offcanvas) => {
@@ -17,11 +18,14 @@ export const openCartModal = () => {
       offcanvasInstance.hide();
     }
   });
-  var myModal = new bootstrap.Modal(document.getElementById("shoppingCart"), {
+
+  // Open shopping cart modal
+  const myModal = new bootstrap.Modal(document.getElementById("shoppingCart"), {
     keyboard: false,
   });
 
   myModal.show();
+
   document
     .getElementById("shoppingCart")
     .addEventListener("hidden.bs.modal", () => {

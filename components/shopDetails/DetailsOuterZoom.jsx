@@ -15,8 +15,13 @@ import Slider1ZoomOuter from "./sliders/Slider1ZoomOuter";
 import { allProducts } from "@/data/products";
 import { useContextElement } from "@/context/Context";
 import { openCartModal } from "@/utlis/openCartModal";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faGooglePay, faCcVisa, faCcMastercard, faApplePay } from "@fortawesome/free-brands-svg-icons";
+import { useDispatch } from "react-redux";
+import { setCartItem } from "@/redux/features/cartSlice.js";
+import toast from "react-hot-toast";
 
-export default function DetailsOuterZoom({ product = allProducts[0] }) {
+export default function DetailsOuterZoom({ product }) {
   const [currentColor, setCurrentColor] = useState(colors[0]);
   const [currentSize, setCurrentSize] = useState(sizeOptions[1]);
   const [quantity, setQuantity] = useState(1);
@@ -38,6 +43,22 @@ export default function DetailsOuterZoom({ product = allProducts[0] }) {
     addToWishlist,
     isAddedtoWishlist,
   } = useContextElement();
+
+  const dispatch = useDispatch();
+  const setItemToCart = () => {
+    const cartItem = {
+      product: product?._id,
+      name: product?.name,
+      price: product?.price,
+      image: product?.images[0]?.url,
+      stock: product?.stock,
+      quantity: 1,
+      offer: product?.offer,
+    };
+
+    dispatch(setCartItem(cartItem));
+    toast.success("Item added to Cart");
+  };
   return (
     <section
       className="flat-spacing-4 pt_0"
@@ -239,7 +260,7 @@ export default function DetailsOuterZoom({ product = allProducts[0] }) {
                       <a
                         onClick={() => {
                           openCartModal();
-                          addProductToCart(product.id, quantity ? quantity : 1);
+                          setItemToCart()
                         }}
                         className="tf-btn btn-fill justify-content-center fw-6 fs-16 flex-grow-1 animate-hover-btn"
                       >
@@ -250,7 +271,7 @@ export default function DetailsOuterZoom({ product = allProducts[0] }) {
                           -{" "}
                         </span>
                         <span className="tf-qty-price">
-                          ${(product.offer * quantity).toFixed(2)}
+                        ₹{(product.offer * quantity).toFixed(2)}
                         </span>
                       </a>
                       <a
@@ -292,12 +313,20 @@ export default function DetailsOuterZoom({ product = allProducts[0] }) {
                       <div className="w-100">
                         <a href="#" className="btns-full">
                           Buy with
-                          <Image
+
+                          <span className="d-flex gap-3 fs-4">
+                            <FontAwesomeIcon icon={faGooglePay} className="text-xl" />
+                            <FontAwesomeIcon icon={faCcVisa} className="text-xl" />
+                            <FontAwesomeIcon icon={faCcMastercard} className="text-xl" />
+                            <FontAwesomeIcon icon={faApplePay} className="text-xl" />
+                          </span>
+                          
+                          {/* <Image
                             alt="image"
                             src="/images/payments/paypal.png"
                             width={64}
                             height={18}
-                          />
+                          /> */}
                         </a>
                         <a href="#" className="payment-more-option">
                           More payment options
@@ -305,7 +334,7 @@ export default function DetailsOuterZoom({ product = allProducts[0] }) {
                       </div>
                     </form>
                   </div>
-                  <div className="tf-product-info-extra-link">
+                  {/* <div className="tf-product-info-extra-link">
                     <a
                       href="#compare_color"
                       data-bs-toggle="modal"
@@ -360,7 +389,7 @@ export default function DetailsOuterZoom({ product = allProducts[0] }) {
                       </div>
                       <div className="text fw-6">Share</div>
                     </a>
-                  </div>
+                  </div> */}
                   <div className="tf-product-info-delivery-return">
                     <div className="row">
                       <div className="col-xl-6 col-12">
@@ -394,11 +423,10 @@ export default function DetailsOuterZoom({ product = allProducts[0] }) {
                     <div className="tf-product-trust-mess">
                       <i className="icon-safe" />
                       <p className="fw-6">
-                        Guarantee Safe <br />
-                        Checkout
+                        Guarantee Safe Checkout
                       </p>
                     </div>
-                    <div className="tf-payment">
+                    {/* <div className="tf-payment">
                       {paymentImages.map((image, index) => (
                         <Image
                           key={index}
@@ -408,7 +436,7 @@ export default function DetailsOuterZoom({ product = allProducts[0] }) {
                           height={image.height}
                         />
                       ))}
-                    </div>
+                    </div> */}
                   </div>
                 </div>
               </div>
@@ -416,7 +444,7 @@ export default function DetailsOuterZoom({ product = allProducts[0] }) {
           </div>
         </div>
       </div>{" "}
-      <StickyItem />
+      <StickyItem product={product}/>
     </section>
   );
 }

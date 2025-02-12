@@ -94,6 +94,10 @@ const orderSchema = new mongoose.Schema({
             message:"Please select valid order status"
         }
     },
+    orderNotes:{
+        type:String,
+        required:false
+    },
     deliveredAt:Date
 },
 {timestamps:true}

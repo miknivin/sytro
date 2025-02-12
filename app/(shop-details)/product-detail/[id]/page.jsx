@@ -9,7 +9,9 @@ import Link from "next/link";
 import DetailsOuterZoom from "@/components/shopDetails/DetailsOuterZoom";
 import ProductSinglePrevNext from "@/components/common/ProductSinglePrevNext";
 import { useGetProductDetailsQuery } from "@/redux/api/productsApi";
-import  FullScreenSpinner  from "@components/common/FullScreenSpinner" 
+import FullScreenSpinner from "@/components/common/FullScreenSpinner";
+
+
 // export const metadata = {
 //   title: "Shop Details || Ecomus - Ultimate Nextjs Ecommerce Template",
 //   description: "Ecomus - Ultimate Nextjs Ecommerce Template",

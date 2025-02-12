@@ -8,3 +8,13 @@
 @import "./custom.scss";
 // @import "photoswipe/dist/photoswipe.css";
 // @import "rc-slider/assets/index.css";
+.border-none-b{
+    border: none !important;
+    width:100%;
+    background: transparent !important;
+}
+
+.rotate-180 {
+    transition: all ease 300ms; 
+    transform: rotate(180deg);
+}

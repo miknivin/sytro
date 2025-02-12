@@ -2,11 +2,12 @@
 import Productcard4 from "@/components/shopCards/Productcart4";
 import { useGetProductsQuery } from "@/redux/api/productsApi";
 
-import { useState } from "react";
-
+import { useState, useEffect } from "react";
+import { setProducts } from "@/redux/features/productSlice";
+import { useDispatch, useSelector } from "react-redux";
 export default function Products() {
-  const [page, setPage] = useState(1); // Track current page for pagination
-
+  const [page, setPage] = useState(1); 
+  const dispatch = useDispatch();
   const { data, error, isLoading, isFetching } = useGetProductsQuery({
     page
   });
@@ -19,6 +20,12 @@ export default function Products() {
       setPage((prev) => prev + 1);
     }
   };
+  useEffect(() => {
+    if (data?.filteredProducts) {
+      console.log(data?.filteredProducts)
+      dispatch(setProducts(data.filteredProducts)); 
+    }
+  }, [data, dispatch]);
 
   return (
     <section className="flat-spacing-6">

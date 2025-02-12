@@ -6,7 +6,7 @@ import Quantity from "./Quantity";
 import { products4 } from "@/data/products";
 import { useContextElement } from "@/context/Context";
 
-export default function StickyItem({ soldOut = false }) {
+export default function StickyItem({ soldOut = false, product }) {
   const { addProductToCart, isAddedToCartProducts } = useContextElement();
   return (
     <div className="tf-sticky-btn-atc">
@@ -16,33 +16,26 @@ export default function StickyItem({ soldOut = false }) {
             <div className="tf-sticky-atc-img">
               <Image
                 className="lazyloaded"
-                data-src={products4[2].imgSrc}
+                data-src={product.images[1].url}
                 alt="image"
-                src={products4[2].imgSrc}
+                src={product.images[1].url}
                 width={770}
                 height={1075}
               />
             </div>
             <div className="tf-sticky-atc-title fw-5 d-xl-block d-none">
-              {products4[2].title}
+              {product.name}
             </div>
           </div>
           <div className="tf-sticky-atc-infos">
             <form onSubmit={(e) => e.preventDefault()} className="">
               <div className="tf-sticky-atc-variant-price text-center">
-                <select className="tf-select">
-                  {options.map((option) => (
-                    <option key={option.value} value={option.value}>
-                      {option.label}
-                    </option>
-                  ))}
-                </select>
               </div>
               <div className="tf-sticky-atc-btns">
                 <div className="tf-product-info-quantity">
                   <Quantity />
                 </div>
-                {soldOut ? (
+                {product.stocks<=0 ? (
                   <a className="tf-btn btns-sold-out cursor-not-allowed btn-fill radius-3 justify-content-center fw-6 fs-14 flex-grow-1 animate-hover-btn ">
                     <span>Sold out</span>
                   </a>

@@ -21,6 +21,24 @@ export const cartSlice = createSlice({
   name: "cartSlice",
   initialState,
   reducers: {
+    updateCartItem: (state, action) => {
+      const item = action.payload;
+
+      const isItemExist = state.cartItems.find(
+        (i) => i.product === item.product,
+      );
+
+      if (isItemExist) {
+        state.cartItems = state.cartItems.map((i) =>
+          i.product === isItemExist.product ? item : i,
+        );
+      } else {
+        state.cartItems = [...state.cartItems, item];
+      }
+
+      localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
+    },    
+
     setCartItem: (state, action) => {
       const item = action.payload;
 
@@ -30,7 +48,9 @@ export const cartSlice = createSlice({
 
       if (isItemExist) {
         state.cartItems = state.cartItems.map((i) =>
-          i.product === isItemExist.product ? item : i
+          i.product === isItemExist.product
+            ? { ...i, quantity: i.quantity + 1 } 
+            : i
         );
       } else {
         state.cartItems = [...state.cartItems, item];
@@ -59,5 +79,5 @@ export const cartSlice = createSlice({
 
 export default cartSlice.reducer;
 
-export const { setCartItem, removeCartItem, saveShippingInfo, clearCart } =
+export const { setCartItem, removeCartItem, saveShippingInfo, clearCart,updateCartItem } =
   cartSlice.actions;
