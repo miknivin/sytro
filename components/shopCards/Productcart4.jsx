@@ -80,7 +80,7 @@ export default function Productcard4({ product }) {
           <Link
             href={`/product-detail/${product._id}`}
             onClick={() => setQuickViewItem(product)}
-            data-bs-toggle="modal"
+            // data-bs-toggle="modal"
             className="box-icon bg_white quickview tf-btn-loading round"
           >
             <span className="icon icon-view"></span>
@@ -103,11 +103,11 @@ export default function Productcard4({ product }) {
           Add to cart
         </a>
 
-        {product.discount && (
+        {/* {product.discount && (
           <div className="on-sale-wrap text-end">
             <div className="on-sale-item">{product.discount}</div>
           </div>
-        )}
+        )} */}
         {/* {product.countdown && (
           <div className="countdown-box">
             <div className="js-countdown">
@@ -120,7 +120,7 @@ export default function Productcard4({ product }) {
         <Link href={`/product-detail/${product._id}`} className="title link">
           {product.name}
         </Link>
-        <span className="price">₹{product.actualPrice.toFixed(2)}</span>
+        <span className="price">₹{product.offer.toFixed(2)}</span>
         {/* {product.colors && (
           <ul className="list-color-product">
             {product.colors.map((color) => (

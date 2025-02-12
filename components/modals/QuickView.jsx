@@ -1,9 +1,7 @@
 "use client";
 import { useContextElement } from "@/context/Context";
-
 import Image from "next/image";
 import Link from "next/link";
-
 import { Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import Quantity from "../shopDetails/Quantity";
@@ -26,28 +24,32 @@ export default function QuickView() {
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
-    setIsClient(true);
+    setIsClient(true); // Ensure this component is rendered on the client side
   }, []);
 
-  if (!isClient) return null;
   const openModalSizeChoice = () => {
-    const myModal = new Modal(document?.getElementById("find_size"), {
-      keyboard: false,
-    });
-  
-    myModal.show();
-  
-    document?.getElementById("find_size").addEventListener("hidden.bs.modal", () => {
-      myModal.hide();
-    });
-  
-    const backdrops = document?.querySelectorAll(".modal-backdrop");
-    if (backdrops.length > 1) {
-      // Apply z-index to the last backdrop
-      const lastBackdrop = backdrops[backdrops.length - 1];
-      lastBackdrop.style.zIndex = "1057";
+    if (typeof document !== "undefined") {
+      const myModal = new Modal(document.getElementById("find_size"), {
+        keyboard: false,
+      });
+
+      myModal.show();
+
+      document
+        .getElementById("find_size")
+        .addEventListener("hidden.bs.modal", () => {
+          myModal.hide();
+        });
+
+      const backdrops = document.querySelectorAll(".modal-backdrop");
+      if (backdrops.length > 1) {
+        const lastBackdrop = backdrops[backdrops.length - 1];
+        lastBackdrop.style.zIndex = "1057";
+      }
     }
   };
+
+  if (!isClient) return null; // Render nothing until the component is on the client side
 
   return (
     <div className="modal fade modalDemo" id="quick_view">
@@ -121,7 +123,9 @@ export default function QuickView() {
                   </div>
                 </div>
                 <div className="tf-product-info-price">
-                  <div className="price">${quickViewItem.price?.toFixed(2)}</div>
+                  <div className="price">
+                    ${quickViewItem.price?.toFixed(2)}
+                  </div>
                 </div>
                 <div className="tf-product-description">
                   <p>

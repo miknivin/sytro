@@ -311,7 +311,7 @@ export default function DetailsOuterZoom({ product }) {
                         <span className="icon icon-check" />
                       </a>
                       <div className="w-100">
-                        <a href="#" className="btns-full">
+                        <button disabled className="btns-full">
                           Buy with
 
                           <span className="d-flex gap-3 fs-4">
@@ -327,10 +327,10 @@ export default function DetailsOuterZoom({ product }) {
                             width={64}
                             height={18}
                           /> */}
-                        </a>
-                        <a href="#" className="payment-more-option">
+                        </button>
+                        {/* <a href="#" className="payment-more-option">
                           More payment options
-                        </a>
+                        </a> */}
                       </div>
                     </form>
                   </div>
