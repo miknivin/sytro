@@ -5,13 +5,13 @@ import DashboardNav from "@/components/othersPages/dashboard/DashboardNav";
 import React from "react";
 
 export const metadata = {
-  title: "My Account Edit || Ecomus - Ultimate Nextjs Ecommerce Template",
-  description: "Ecomus - Ultimate React Nextjs Ecommerce Template",
+  title: "My Account Edit || Sytro - Ultimate Nextjs Ecommerce Template",
+  description: "Ecomus ",
 };
 export default function page() {
   return (
     <>
-      <Header2 />
+      <Header4 />
       <div className="tf-page-title">
         <div className="container-full">
           <div className="heading text-center">My Account Edit</div>

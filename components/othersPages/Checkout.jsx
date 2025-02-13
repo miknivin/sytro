@@ -5,8 +5,10 @@ import { useCreateNewOrderMutation } from "@/redux/api/orderApi";
 import CartFooter from "./checkout/CartFooter";
 import { countries } from "@/data/countries.js";
 import { states } from "@/data/states.js";
-
+import Swal from "sweetalert2";
+import { useRouter } from "next/navigation";
 export default function Checkout() {
+  const router = useRouter();
   const [subtotal, setSubtotal] = useState(0);
   const [countryId, setCountryId] = useState("101");
   const [filteredStates, setFilteredStates] = useState([]);
@@ -29,7 +31,7 @@ export default function Checkout() {
 
   useEffect(() => {
     setSubtotal(
-      cartItems.reduce((total, item) => total + item.offer * item.quantity, 0)
+      cartItems.reduce((total, item) => total + item.price * item.quantity, 0)
     );
   }, [cartItems]);
 
@@ -55,7 +57,7 @@ export default function Checkout() {
       shippingInfo: { 
         ...formData, 
         fullName,
-        email // Include email in shipping info
+        email 
       },
       orderItems: cartItems,
       paymentMethod: formData.paymentMethod,
@@ -72,6 +74,8 @@ export default function Checkout() {
         title: "Order Placed Successfully!",
         text: "Thank you for your purchase. Your order has been placed.",
         confirmButtonText: "OK",
+      }).then(() => {
+        router.push("/my-account-orders"); // Navigate to orders page
       });
     } catch (err) {
       Swal.fire({

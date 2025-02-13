@@ -104,7 +104,6 @@ export const ProductCard = ({ product }) => {
           <Link
             href={`/product-detail/${product._id}`}
             // onClick={() => setQuickViewItem(product)}
-            data-bs-toggle="modal"
             className="box-icon bg_white quickview tf-btn-loading"
           >
             <span className="icon icon-view" />

@@ -22,7 +22,7 @@ export const metadata = {
 export default function Home() {
   return (
     <>
-      <Topbar2 />
+      {/* <Topbar2 /> */}
       <Header4 />
       <Hero />
       <Marquee />

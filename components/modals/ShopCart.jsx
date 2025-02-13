@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useRef, useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Rupee from "@/utlis/Rupeesvg";
-import {  removeCartItem,updateCartItem } from "@/redux/features/cartSlice";
+import { removeCartItem, updateCartItem } from "@/redux/features/cartSlice";
 import TruckIcon from "@/utlis/TruckSvg";
 
 export default function ShopCart() {
@@ -17,7 +17,7 @@ export default function ShopCart() {
   // Calculate subtotal whenever cartItems change
   useEffect(() => {
     const newSubtotal = cartItems.reduce((total, item) => {
-      return total + item.offer * item.quantity;
+      return total + item.price * item.quantity;
     }, 0);
     setSubtotal(newSubtotal);
   }, [cartItems]);
@@ -30,9 +30,9 @@ export default function ShopCart() {
 
   // Function to decrease quantity
   const decreaseQuantity = (cartItem, id) => {
-    console.log(id)
+    console.log(id);
     const newQuantity = Number(cartItem.quantity) - 1;
-    console.log(newQuantity)
+    console.log(newQuantity);
     if (newQuantity >= 1) {
       updateQuantity(cartItem, id, newQuantity);
     }
@@ -56,8 +56,12 @@ export default function ShopCart() {
       quantity: quantity,
       offer: item?.offer,
     };
-  
+
     dispatch(updateCartItem(cartItem));
+  };
+
+  const removeItemFromCart = (item, id) => {
+    dispatch(removeCartItem(item));
   };
 
   // Function to remove an item from the cart
@@ -85,7 +89,7 @@ export default function ShopCart() {
               <div className="tf-progress-bar">
                 <span style={{ width: "50%" }}>
                   <div className="progress-car">
-                    <TruckIcon/>
+                    <TruckIcon />
                   </div>
                 </span>
               </div>
@@ -107,10 +111,12 @@ export default function ShopCart() {
                               src={elm.image}
                               width={668}
                               height={932}
-                              style={{ objectFit: "cover", borderRadius: "15px" }}
+                              style={{
+                                objectFit: "cover",
+                                borderRadius: "15px",
+                              }}
                             />
                           </Link>
-
                         </div>
                         <div className="tf-mini-cart-info">
                           <Link
@@ -121,13 +127,15 @@ export default function ShopCart() {
                           </Link>
                           <div className="price fw-6">
                             <Rupee width={"10px"} />{" "}
-                            {(elm.offer * elm.quantity).toFixed(2)}
+                            {(elm.price * elm.quantity).toFixed(2)}
                           </div>
                           <div className="tf-mini-cart-btns">
                             <div className="wg-quantity small">
                               <span
                                 className="btn-quantity minus-btn"
-                                onClick={() => decreaseQuantity(elm, elm.product)}
+                                onClick={() =>
+                                  decreaseQuantity(elm, elm.product)
+                                }
                               >
                                 -
                               </span>
@@ -136,12 +144,19 @@ export default function ShopCart() {
                                 name="number"
                                 value={elm.quantity}
                                 min={1}
-                                onChange={(e) => updateQuantity(elm, elm.product, parseInt(e.target.value) || 1)}
-                     
+                                onChange={(e) =>
+                                  updateQuantity(
+                                    elm,
+                                    elm.product,
+                                    parseInt(e.target.value) || 1
+                                  )
+                                }
                               />
                               <span
                                 className="btn-quantity plus-btn"
-                                onClick={() => increaseQuantity(elm, elm.product)}
+                                onClick={() =>
+                                  increaseQuantity(elm, elm.product)
+                                }
                               >
                                 +
                               </span>
@@ -149,7 +164,7 @@ export default function ShopCart() {
                             <div
                               className="tf-mini-cart-remove"
                               style={{ cursor: "pointer" }}
-                              onClick={() => removeItem(elm.id)}
+                              onClick={() => removeItemFromCart(elm.product)}
                             >
                               Remove
                             </div>
@@ -166,7 +181,7 @@ export default function ShopCart() {
                           </div>
                           <div className="col-12 mt-3">
                             <Link
-                              href={'/shop-default'}
+                              href={"/shop-default"}
                               className="tf-btn btn-fill animate-hover-btn radius-3 w-100 justify-content-center"
                               style={{ width: "fit-content" }}
                             >
@@ -184,15 +199,17 @@ export default function ShopCart() {
                   <div className="tf-cart-totals-discounts">
                     <div className="tf-cart-total">Subtotal</div>
                     <div className="tf-totals-total-value fw-6">
-                    <Rupee width={"10px"} />{" "}{subtotal.toFixed(2)}
+                      <Rupee width={"10px"} /> {subtotal.toFixed(2)}
                     </div>
                   </div>
                   <div className="tf-mini-cart-line" />
                   <div className="tf-cart-checkbox"></div>
-                  <div  data-bs-dismiss="modal" className="tf-mini-cart-view-checkout">
+                  <div
+                    data-bs-dismiss="modal"
+                    className="tf-mini-cart-view-checkout"
+                  >
                     <Link
-                     
-                      href={'/checkout'}
+                      href={"/checkout"}
                       className="tf-btn btn-fill animate-hover-btn radius-3 w-100 justify-content-center"
                     >
                       <span>Check out</span>

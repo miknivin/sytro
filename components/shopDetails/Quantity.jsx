@@ -1,31 +1,25 @@
 "use client";
 
-import { useEffect, useState } from "react";
 
-export default function Quantity({ setQuantity = (value) => {} }) {
-  const [count, setCount] = useState(1);
-  useEffect(() => {
-    setQuantity(count);
-  }, [count]);
-
+export default function Quantity({ quantity, setQuantity }) {
   return (
     <div className="wg-quantity">
       <span
         className="btn-quantity minus-btn"
-        onClick={() => setCount((pre) => (pre == 1 ? 1 : pre - 1))}
+        onClick={() => setQuantity((prev) => (prev === 1 ? 1 : prev - 1))}
       >
         -
       </span>
       <input
         min={1}
         type="text"
-        onChange={(e) => setCount(e.target.value / 1)}
+        onChange={(e) => setQuantity(Number(e.target.value))}
         name="number"
-        value={count}
+        value={quantity}
       />
       <span
         className="btn-quantity plus-btn"
-        onClick={() => setCount((pre) => pre + 1)}
+        onClick={() => setQuantity((prev) => prev + 1)}
       >
         +
       </span>

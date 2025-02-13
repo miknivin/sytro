@@ -6,8 +6,15 @@ import Quantity from "./Quantity";
 import { products4 } from "@/data/products";
 import { useContextElement } from "@/context/Context";
 
-export default function StickyItem({ soldOut = false, product }) {
-  const { addProductToCart, isAddedToCartProducts } = useContextElement();
+export default function StickyItem({
+  soldOut = false,
+  product,
+  isAddedToCartProducts,
+  setItemsTocart,
+  setQuantity,
+  quantity,
+}) {
+  // const { addProductToCart, isAddedToCartProducts } = useContextElement();
   return (
     <div className="tf-sticky-btn-atc">
       <div className="container">
@@ -29,23 +36,22 @@ export default function StickyItem({ soldOut = false, product }) {
           </div>
           <div className="tf-sticky-atc-infos">
             <form onSubmit={(e) => e.preventDefault()} className="">
-              <div className="tf-sticky-atc-variant-price text-center">
-              </div>
+              <div className="tf-sticky-atc-variant-price text-center"></div>
               <div className="tf-sticky-atc-btns">
                 <div className="tf-product-info-quantity">
-                  <Quantity />
+                 <Quantity quantity={quantity} setQuantity={setQuantity} />
                 </div>
-                {product.stocks<=0 ? (
+                {product.stocks <= 0 ? (
                   <a className="tf-btn btns-sold-out cursor-not-allowed btn-fill radius-3 justify-content-center fw-6 fs-14 flex-grow-1 animate-hover-btn ">
                     <span>Sold out</span>
                   </a>
                 ) : (
                   <a
-                    onClick={() => addProductToCart(products4[2].id)}
+                    onClick={() => setItemsTocart()}
                     className="tf-btn btn-fill radius-3 justify-content-center fw-6 fs-14 flex-grow-1 animate-hover-btn"
                   >
                     <span>
-                      {isAddedToCartProducts(products4[2].id)
+                      {isAddedToCartProducts(product._id)
                         ? "Already Added"
                         : "Add to cart"}
                     </span>

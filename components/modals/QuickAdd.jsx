@@ -23,7 +23,7 @@ export default function QuickAdd() {
 
   useEffect(() => {
     setItem(selectedProduct || {});
-    console.log(item)
+   // console.log(item)
   }, [selectedProduct]);
 
   const [currentColor, setCurrentColor] = useState(null);

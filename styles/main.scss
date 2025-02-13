@@ -49,6 +49,7 @@
     display: flex;
     flex-direction: row;
     align-items: stretch;
+    overflow-x: auto;
   }
 
   .my-account-nav-item {
@@ -59,4 +60,8 @@
   .my-account-nav .my-account-nav-item {
     white-space: nowrap;
   }
+}
+
+.tf-field-input .tf-input{
+  color: #363636;
 }

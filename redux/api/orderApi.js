@@ -19,7 +19,7 @@ export const orderApi = createApi({
       query: () => `/orders/getOrdersByUser`,
     }),
     orderDetails: builder.query({
-      query: (id) => `/order/${id}`,
+      query: (id) => `/orders/${id}`,
       providesTags: ["Order"],
     }),
     stripeCheckoutSession: builder.mutation({

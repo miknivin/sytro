@@ -56,7 +56,7 @@ const CartFooter = ({
                     style={{ display: "inline-flex", alignItems: "center" }}
                   >
                     <Rupee width={"8px"} />
-                    {(elm.offer * elm.quantity).toFixed(2)}
+                    {(elm.price * elm.quantity).toFixed(2)}
                   </span>
                 </div>
               </li>

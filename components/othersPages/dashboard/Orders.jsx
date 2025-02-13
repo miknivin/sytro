@@ -1,5 +1,5 @@
 "use client"
-import React, { useEffect } from "react";
+import React from "react";
 import Link from "next/link";
 import { useMyOrdersQuery } from "@/redux/api/orderApi"; // Adjust the import path based on your project structure
 
@@ -7,11 +7,6 @@ export default function Orders() {
   const { data , isLoading, isError } = useMyOrdersQuery();
   const orders = Array.isArray(data?.orders) ? data.orders : [];
   // Log orders data when available
-  useEffect(() => {
-    if (orders) {
-      console.log("Fetched Orders:", orders);
-    }
-  }, [orders]);
 
   if (isLoading) {
     return <p>Loading orders...</p>;
@@ -39,7 +34,7 @@ export default function Orders() {
             {orders?.length > 0 ? (
               orders.map((order) => (
                 <tr key={order.id} className="tf-order-item">
-                  <td>#{order._id}</td>
+                  <td>#{order._id.slice(-6)}</td>
                   <td>{new Date(order?.createdAt).toLocaleDateString()}</td>
                   <td>{order?.orderStatus}</td>
                   <td>
@@ -47,7 +42,7 @@ export default function Orders() {
                   </td>
                   <td>
                     <Link
-                      href={`/my-account-orders-details?orderId=${order.id}`}
+                      href={`/my-account-orders-details?orderId=${order._id}`}
                       className="tf-btn btn-fill animate-hover-btn rounded-0 justify-content-center"
                     >
                       <span>View</span>
