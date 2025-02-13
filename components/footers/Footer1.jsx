@@ -77,17 +77,22 @@ export default function Footer1({ bgColor = "" }) {
                   <ul>
                     <li>
                       <p>
-                        <b>Address:</b> Panakal tower 
-                        North Basin Road  
+                        <b>Address:</b> Panakal tower North Basin Road
                         <br />
                         Broadway Ernakulam,
-                        <br/>
+                        <br />
                         Kochi, Kerala 682031
                       </p>
                     </li>
                     <li>
                       <p>
-                       <b>Email: </b><a style={{fontWeight:'unset'}} href="mailto:hifibagsernakulam@gmail.com">hifibagsernakulam@gmail.com</a>
+                        <b>Email: </b>
+                        <a
+                          style={{ fontWeight: "unset" }}
+                          href="mailto:sytrobags@gmail.com"
+                        >
+                          sytrobags@gmail.com
+                        </a>
                       </p>
                     </li>
                     <li>
@@ -225,14 +230,14 @@ export default function Footer1({ bgColor = "" }) {
                       </div>
                       <div className="subscribe-msg" />
                     </form>
-                    <div className="tf-cur">
+                    {/* <div className="tf-cur">
                       <div className="tf-currencies">
                         <CurrencySelect />
                       </div>
                       <div className="tf-languages">
                         <LanguageSelect />
                       </div>
-                    </div>
+                    </div> */}
                   </div>
                 </div>
               </div>
@@ -245,10 +250,9 @@ export default function Footer1({ bgColor = "" }) {
               <div className="col-12">
                 <div className="footer-bottom-wrap d-flex gap-20 flex-wrap justify-content-between align-items-center">
                   <div className="footer-menu_item">
-                    © {new Date().getFullYear()} Ecomus Store. All Rights
-                    Reserved
+                    © {new Date().getFullYear()} Sytro. All Rights Reserved
                   </div>
-                  <div className="tf-payment">
+                  {/* <div className="tf-payment">
                     {paymentImages.map((image, index) => (
                       <Image
                         key={index}
@@ -258,7 +262,7 @@ export default function Footer1({ bgColor = "" }) {
                         alt={image.alt}
                       />
                     ))}
-                  </div>
+                  </div> */}
                 </div>
               </div>
             </div>

@@ -1,4 +1,4 @@
-"use client;"
+"use client;";
 
 import React from "react";
 import Nav from "./Nav";
@@ -6,7 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import CartLength from "../common/CartLength";
 import WishlistLength from "../common/WishlistLength";
-import { useSelector } from "react-redux";
+
 import UserIcon from "../common/UserIcon";
 export default function Header4() {
   return (
@@ -16,32 +16,32 @@ export default function Header4() {
           <div className="row wrapper-header align-items-center">
             <div className="col-xl-5 tf-md-hidden">
               <div className="tf-cur">
-              <ul className="tf-social-icon d-flex gap-10">
-                    <li>
-                      <a
-                        href="#"
-                        className="box-icon w_34 round social-facebook social-line"
-                      >
-                        <i className="icon fs-14 icon-fb" />
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        href="#"
-                        className="box-icon w_34 round social-twiter social-line"
-                      >
-                        <i className="icon fs-12 icon-Icon-x" />
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        href="#"
-                        className="box-icon w_34 round social-instagram social-line"
-                      >
-                        <i className="icon fs-14 icon-instagram" />
-                      </a>
-                    </li>
-                  </ul>
+                <ul className="tf-social-icon d-flex gap-10">
+                  <li>
+                    <a
+                      href="#"
+                      className="box-icon w_34 round social-facebook social-line"
+                    >
+                      <i className="icon fs-14 icon-fb" />
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="#"
+                      className="box-icon w_34 round social-twiter social-line"
+                    >
+                      <i className="icon fs-12 icon-Icon-x" />
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="#"
+                      className="box-icon w_34 round social-instagram social-line"
+                    >
+                      <i className="icon fs-14 icon-instagram" />
+                    </a>
+                  </li>
+                </ul>
                 {/* <div className="tf-currencies">
                   <CurrencySelect topStart />
                 </div>
@@ -99,7 +99,7 @@ export default function Header4() {
                   </a>
                 </li>
                 <li className="nav-account">
-                 <UserIcon/>
+                  <UserIcon />
                 </li>
                 <li className="nav-wishlist">
                   <Link href={`/wishlist`} className="nav-icon-item">
@@ -133,12 +133,9 @@ export default function Header4() {
               <ul className="box-nav-ul d-flex align-items-center justify-content-center gap-30">
                 <Nav />
                 <li className="menu-item">
-                  <a
-                    href="https://themeforest.net/item/ecomus-ultimate-html5-template/53417990?s_rank=3"
-                    className="item-link"
-                  >
+                  <Link href="/contact-2" className="item-link">
                     Contact
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </nav>

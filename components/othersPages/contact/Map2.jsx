@@ -24,11 +24,7 @@ export default function Map2() {
                 <p className="mb_15">
                   <strong>Address</strong>
                 </p>
-                  <p>
-                    North Basin Road 
-                    Broadway Ernakulam, 
-                    Kochi, Kerala 682031
-                  </p>
+                <p>North Basin Road Broadway Ernakulam, Kochi, Kerala 682031</p>
               </div>
               <div className="mb_20">
                 <p className="mb_15">
@@ -40,7 +36,7 @@ export default function Map2() {
                 <p className="mb_15">
                   <strong>Email</strong>
                 </p>
-                <p>hifibagsernakulam@gmail.com</p>
+                <p>sytrobags@gmail.com</p>
               </div>
               <div className="mb_36">
                 <p className="mb_15">

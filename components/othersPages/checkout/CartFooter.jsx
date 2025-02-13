@@ -5,16 +5,35 @@ import Image from "next/image";
 import Link from "next/link";
 import Rupee from "@/utlis/Rupeesvg";
 import { useSelector } from "react-redux";
-const CartFooter = ({ cartItems, subtotal }) => {
-    const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+
+const CartFooter = ({ 
+  cartItems, 
+  subtotal, 
+  formData, 
+  email, 
+  handleSubmit,
+  isLoading 
+}) => {
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+
+  // Check if form is valid
+  const isFormValid = () => {
+    return (
+      formData.firstName &&
+      formData.lastName &&
+      formData.address &&
+      formData.city &&
+      formData.phoneNo &&
+      formData.zipCode &&
+      email
+    );
+  };
+
   return (
     <div className="tf-page-cart-footer">
       <div className="tf-cart-footer-inner">
         <h5 className="fw-5 mb_20">Your order</h5>
-        <form
-          onSubmit={(e) => e.preventDefault()}
-          className="tf-page-cart-checkout widget-wrap-checkout"
-        >
+        <form onSubmit={handleSubmit} className="tf-page-cart-checkout widget-wrap-checkout">
           <ul className="wrap-checkout-product">
             {cartItems.map((elm, i) => (
               <li key={i} className="checkout-product-item">
@@ -61,7 +80,7 @@ const CartFooter = ({ cartItems, subtotal }) => {
           )}
 
           <div className="coupon-box">
-            <input  type="text" placeholder="Discount code" />
+            <input type="text" placeholder="Discount code" />
             <a
               href="#"
               className="tf-btn btn-sm radius-3 btn-fill btn-icon animate-hover-btn"
@@ -85,10 +104,12 @@ const CartFooter = ({ cartItems, subtotal }) => {
             <div className="fieldset-radio mb_20">
               <input
                 type="radio"
-                name="payment"
+                name="paymentMethod"
                 id="bank"
+                value="BANK"
                 disabled
                 className="tf-check"
+                onChange={(e) => formData.paymentMethod = e.target.value}
               />
               <label htmlFor="bank">Direct bank transfer</label>
             </div>
@@ -96,24 +117,34 @@ const CartFooter = ({ cartItems, subtotal }) => {
               <input
                 required
                 type="radio"
-                name="payment"
+                name="paymentMethod"
                 id="delivery"
+                value="COD"
                 className="tf-check"
                 defaultChecked
+                onChange={(e) => formData.paymentMethod = e.target.value}
               />
               <label htmlFor="delivery">Cash on delivery</label>
             </div>
           </div>
-          {!isAuthenticated?(
-            <a href="#login" data-bs-toggle="modal" className="tf-btn radius-3 btn-fill btn-icon animate-hover-btn justify-content-center">
-            Place order
-          </a>
-          ):(
-            <button  className="tf-btn radius-3 btn-fill btn-icon animate-hover-btn justify-content-center">
-            Place order
-          </button>
+
+          {!isAuthenticated ? (
+            <a 
+              href="#login" 
+              data-bs-toggle="modal" 
+              className="tf-btn radius-3 btn-fill btn-icon animate-hover-btn justify-content-center"
+            >
+              Place order
+            </a>
+          ) : (
+            <button 
+              type="submit"
+              disabled={isLoading || !isFormValid() || !cartItems.length}
+              className="tf-btn radius-3 btn-fill btn-icon animate-hover-btn justify-content-center"
+            >
+              {isLoading ? "Processing..." : "Place order"}
+            </button>
           )}
-          
         </form>
       </div>
     </div>

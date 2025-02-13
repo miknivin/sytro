@@ -3,8 +3,11 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useContextElement } from "@/context/Context";
-import CountdownComponent from "../common/Countdown";
+
+import {setSingleProductForQuickAdd} from "@/redux/features/productSlice"
+import { useDispatch } from "react-redux";
 export const ProductCard = ({ product }) => {
+  const dispatch = useDispatch();
   const [currentImage, setCurrentImage] = useState(product.imgSrc);
   const { setQuickViewItem } = useContextElement();
   const {
@@ -15,7 +18,7 @@ export const ProductCard = ({ product }) => {
     isAddedtoCompareItem,
   } = useContextElement();
   useEffect(() => {
-    setCurrentImage(product.imgSrc);
+    setCurrentImage(product.images[0].url);
   }, [product]);
 
   return (
@@ -24,7 +27,7 @@ export const ProductCard = ({ product }) => {
         <Link href={`/product-detail/${product.id}`} className="product-img">
           <Image
             className="lazyload img-product"
-            data-src={product.imgSrc}
+            data-src={product.images[0].url}
             src={currentImage}
             alt="image-product"
             width={720}
@@ -33,25 +36,36 @@ export const ProductCard = ({ product }) => {
           <Image
             className="lazyload img-hover"
             data-src={
-              product.imgHoverSrc ? product.imgHoverSrc : product.imgSrc
+              product.images[1].url
+                ? product.images[1].url
+                : product.images[0].url
             }
-            src={product.imgHoverSrc ? product.imgHoverSrc : product.imgSrc}
+            src={
+              product.images[1].url
+                ? product.images[1].url
+                : product.images[0].url
+            }
             alt="image-product"
             width={720}
             height={1005}
           />
         </Link>
         <div className="list-product-btn">
-          <a
+          <button
             href="#quick_add"
-            onClick={() => setQuickAddItem(product.id)}
+            aria-disabled
+            disabled
+            onClick={() =>{
+              setQuickAddItem(product._id);
+              dispatch(setSingleProductForQuickAdd(product));
+            } }
             data-bs-toggle="modal"
             className="box-icon bg_white quick-add tf-btn-loading"
           >
             <span className="icon icon-bag" />
             <span className="tooltip">Quick Add</span>
-          </a>
-          <a
+          </button>
+          {/* <a
             onClick={() => addToWishlist(product.id)}
             className="box-icon bg_white wishlist btn-icon-action"
           >
@@ -66,8 +80,8 @@ export const ProductCard = ({ product }) => {
                 : "Add to Wishlist"}
             </span>
             <span className="icon icon-delete" />
-          </a>
-          <a
+          </a> */}
+          {/* <a
             href="#compare"
             data-bs-toggle="offcanvas"
             aria-controls="offcanvasLeft"
@@ -86,18 +100,18 @@ export const ProductCard = ({ product }) => {
                 : "Add to Compare"}
             </span>
             <span className="icon icon-check" />
-          </a>
-          <a
-            href="#quick_view"
-            onClick={() => setQuickViewItem(product)}
+          </a> */}
+          <Link
+            href={`/product-detail/${product._id}`}
+            // onClick={() => setQuickViewItem(product)}
             data-bs-toggle="modal"
             className="box-icon bg_white quickview tf-btn-loading"
           >
             <span className="icon icon-view" />
             <span className="tooltip">Quick View</span>
-          </a>
+          </Link>
         </div>
-        {product.countdown && (
+        {/* {product.countdown && (
           <div className="countdown-box">
             <div className="js-countdown">
               <CountdownComponent />
@@ -110,14 +124,14 @@ export const ProductCard = ({ product }) => {
               <span key={size}>{size}</span>
             ))}
           </div>
-        )}
+        )} */}
       </div>
       <div className="card-product-info">
         <Link href={`/product-detail/${product.id}`} className="title link">
-          {product.title}
+          {product.name}
         </Link>
-        <span className="price">${product.price.toFixed(2)}</span>
-        {product.colors && (
+        <span className="price">${product.offer.toFixed(2)}</span>
+        {/* {product.colors && (
           <ul className="list-color-product">
             {product.colors.map((color) => (
               <li
@@ -140,7 +154,7 @@ export const ProductCard = ({ product }) => {
               </li>
             ))}
           </ul>
-        )}
+        )} */}
       </div>
     </div>
   );

@@ -7,6 +7,7 @@ import { useContextElement } from "@/context/Context";
 
 import { allProducts } from "@/data/products";
 import { colors, sizeOptions } from "@/data/singleProductOptions";
+import { useSelector } from "react-redux";
 export default function QuickAdd() {
   const {
     quickAddItem,
@@ -15,16 +16,26 @@ export default function QuickAdd() {
     addToCompareItem,
     isAddedtoCompareItem,
   } = useContextElement();
-  const [item, setItem] = useState(allProducts[0]);
-  useEffect(() => {
-    const filtered = allProducts.filter((el) => el.id == quickAddItem);
-    if (filtered) {
-      setItem(filtered[0]);
-    }
-  }, [quickAddItem]);
-  const [currentColor, setCurrentColor] = useState(colors[0]);
-  const [currentSize, setCurrentSize] = useState(sizeOptions[0]);
 
+  const selectedProduct = useSelector((state) => state.product.singleProduct);
+
+  const [item, setItem] = useState({});
+
+  useEffect(() => {
+    setItem(selectedProduct || {});
+    console.log(item)
+  }, [selectedProduct]);
+
+  const [currentColor, setCurrentColor] = useState(null);
+  const [currentSize, setCurrentSize] = useState(null);
+
+  useEffect(() => {
+    if (selectedProduct) {
+      setCurrentColor(selectedProduct?.colors?.[0] || null);
+      setCurrentSize(selectedProduct?.sizeOptions?.[0] || null);
+    }
+  }, [selectedProduct]);
+  if (!item || Object.keys(item).length === 0) return null;
   return (
     <div className="modal fade modalDemo" id="quick_add">
       <div className="modal-dialog modal-dialog-centered">
@@ -41,19 +52,19 @@ export default function QuickAdd() {
                 <Image
                   alt="image"
                   style={{ objectFit: "contain" }}
-                  src={item.imgSrc}
+                  src={item?.images[0]?.url}
                   width={720}
                   height={1005}
                 />
               </div>
               <div className="content">
-                <Link href={`/product-detail/${item.id}`}>{item.title}</Link>
+                <Link href={`/product-detail/${item._id}`}>{item.title}</Link>
                 <div className="tf-product-info-price">
-                  <div className="price">${item.price.toFixed(2)}</div>
+                  <div className="price">${item.offer.toFixed(2)}</div>
                 </div>
               </div>
             </div>
-            <div className="tf-product-info-variant-picker mb_15">
+            {/* <div className="tf-product-info-variant-picker mb_15">
               <div className="variant-picker-item">
                 <div className="variant-picker-label">
                   Color:
@@ -110,7 +121,7 @@ export default function QuickAdd() {
                   ))}
                 </form>
               </div>
-            </div>
+            </div> */}
             <div className="tf-product-info-quantity mb_15">
               <div className="quantity-title fw-6">Quantity</div>
               <Quantity />
@@ -126,7 +137,7 @@ export default function QuickAdd() {
                       ? "Already Added - "
                       : "Add to cart - "}
                   </span>
-                  <span className="tf-qty-price">${item.price.toFixed(2)}</span>
+                  <span className="tf-qty-price">${item.offer.toFixed(2)}</span>
                 </a>
                 <div className="tf-product-btn-wishlist btn-icon-action">
                   <i className="icon-heart" />
@@ -143,7 +154,7 @@ export default function QuickAdd() {
                   <span className="icon icon-check" />
                 </a>
                 <div className="w-100">
-                  <a href="#" className="btns-full">
+                  <button className="btns-full" disabled>
                     Buy with
                     <Image
                       alt="image"
@@ -151,10 +162,10 @@ export default function QuickAdd() {
                       width={64}
                       height={18}
                     />
-                  </a>
-                  <a href="#" className="payment-more-option">
+                  </button>
+                  {/* <a href="#" className="payment-more-option">
                     More payment options
-                  </a>
+                  </a> */}
                 </div>
               </form>
             </div>

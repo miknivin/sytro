@@ -7,10 +7,10 @@ import { countries } from "@/data/countries.js";
 import { states } from "@/data/states.js";
 
 export default function Checkout() {
-
   const [subtotal, setSubtotal] = useState(0);
   const [countryId, setCountryId] = useState("101");
   const [filteredStates, setFilteredStates] = useState([]);
+  const [email, setEmail] = useState(""); // Added email state
 
   const [formData, setFormData] = useState({
     firstName: "",
@@ -43,21 +43,44 @@ export default function Checkout() {
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
 
+  const handleEmailChange = (e) => {
+    setEmail(e.target.value);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const fullName = `${formData.firstName} ${formData.lastName}`.trim();
 
     const orderData = {
-      shippingInfo: { ...formData, fullName },
+      shippingInfo: { 
+        ...formData, 
+        fullName,
+        email // Include email in shipping info
+      },
       orderItems: cartItems,
       paymentMethod: formData.paymentMethod,
       itemsPrice: subtotal,
       taxAmount: 0,
       shippingAmount: 0,
-      totalAmount: subtotal ,
+      totalAmount: subtotal,
     };
 
-    await createNewOrder(orderData);
+    try {
+      await createNewOrder(orderData).unwrap(); 
+      Swal.fire({
+        icon: "success",
+        title: "Order Placed Successfully!",
+        text: "Thank you for your purchase. Your order has been placed.",
+        confirmButtonText: "OK",
+      });
+    } catch (err) {
+      Swal.fire({
+        icon: "error",
+        title: "Order Failed!",
+        text: "There was an error placing your order. Please try again.",
+        confirmButtonText: "OK",
+      });
+    }
   };
 
   return (
@@ -106,6 +129,8 @@ export default function Checkout() {
                     required
                     type="email"
                     id="email"
+                    value={email}
+                    onChange={handleEmailChange}
                     autoComplete="abc@xyz.com"
                   />
                 </fieldset>
@@ -181,7 +206,14 @@ export default function Checkout() {
               {error && <p>Error placing order</p>}
             </form>
           </div>
-          <CartFooter cartItems={cartItems} subtotal={subtotal} />
+          <CartFooter 
+            cartItems={cartItems} 
+            subtotal={subtotal} 
+            formData={formData}
+            email={email}
+            handleSubmit={handleSubmit}
+            isLoading={isLoading}
+          />
         </div>
       </div>
     </section>

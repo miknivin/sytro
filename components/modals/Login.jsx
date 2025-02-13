@@ -1,8 +1,7 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useLoginMutation } from "@/redux/api/authApi";
 import Swal from "sweetalert2";
-import { Modal } from "bootstrap";
 
 export default function Login() {
   const [login, { isLoading, error }] = useLoginMutation();
@@ -11,6 +10,13 @@ export default function Login() {
     password: "",
   });
   const [errorMessage, setErrorMessage] = useState("");
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      import("bootstrap");
+    }
+  }, []);
+  
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -23,11 +29,16 @@ export default function Login() {
     try {
       await login({ email, password }).unwrap();
 
-      // Close modal
-      const modalElement = document.getElementById("login");
-      if (modalElement) {
-        const modalInstance = Modal.getInstance(modalElement) || new Modal(modalElement);
-        modalInstance.hide();
+      // Ensure this only runs in the browser
+      if (typeof document !== "undefined") {
+        const modalElement = document.getElementById("login");
+        if (modalElement) {
+          import("bootstrap").then(({ Modal }) => {
+            const modalInstance =
+              Modal.getInstance(modalElement) || new Modal(modalElement);
+            modalInstance.hide();
+          });
+        }
       }
 
       Swal.fire({
@@ -46,12 +57,18 @@ export default function Login() {
   };
 
   return (
-    <div className="modal modalCentered fade form-sign-in modal-part-content" id="login">
+    <div
+      className="modal modalCentered fade form-sign-in modal-part-content"
+      id="login"
+    >
       <div className="modal-dialog modal-dialog-centered">
         <div className="modal-content">
           <div className="header">
             <div className="demo-title">Log in</div>
-            <span className="icon-close icon-close-popup" data-bs-dismiss="modal" />
+            <span
+              className="icon-close icon-close-popup"
+              data-bs-dismiss="modal"
+            />
           </div>
           <div className="tf-login-form">
             <form onSubmit={handleSubmit}>
@@ -81,9 +98,15 @@ export default function Login() {
                 />
                 <label className="tf-field-label">Password *</label>
               </div>
-              {errorMessage && <p className="error-message text-danger">{errorMessage}</p>}
+              {errorMessage && (
+                <p className="error-message text-danger">{errorMessage}</p>
+              )}
               <div>
-                <a href="#forgotPassword" data-bs-toggle="modal" className="btn-link link">
+                <a
+                  href="#forgotPassword"
+                  data-bs-toggle="modal"
+                  className="btn-link link"
+                >
                   Forgot your password?
                 </a>
               </div>
@@ -98,14 +121,20 @@ export default function Login() {
                   </button>
                 </div>
                 <div className="w-100">
-                  <a href="#register" data-bs-toggle="modal" className="btn-link fw-6 w-100 link">
+                  <a
+                    href="#register"
+                    data-bs-toggle="modal"
+                    className="btn-link fw-6 w-100 link"
+                  >
                     New customer? Create your account
                     <i className="icon icon-arrow1-top-left" />
                   </a>
                 </div>
               </div>
             </form>
-            {error && <p className="error-message text-danger">{error.data?.message}</p>}
+            {error && (
+              <p className="error-message text-danger">{error.data?.message}</p>
+            )}
           </div>
         </div>
       </div>

@@ -1,9 +1,17 @@
 "use client";
-import React, { useState } from "react";
-import { useRegisterMutation } from "@/redux/api/authApi"; // Adjust import as needed
+
+import React, { useState, useEffect } from "react";
+import { useRegisterMutation } from "@/redux/api/authApi";
 import Swal from "sweetalert2";
-import "bootstrap/dist/js/bootstrap.bundle.min.js";
-import { Modal } from "bootstrap";
+import dynamic from "next/dynamic";
+
+// Dynamically import Bootstrap with no SSR
+const BootstrapClient = dynamic(
+  () => import("bootstrap/dist/js/bootstrap.bundle.min.js"),
+  {
+    ssr: false,
+  }
+);
 
 export default function Register() {
   const [register, { isLoading, error }] = useRegisterMutation();
@@ -14,23 +22,35 @@ export default function Register() {
     password: "",
   });
   const [errorMessage, setErrorMessage] = useState("");
+  const [modalInstance, setModalInstance] = useState(null);
+
+  useEffect(() => {
+    // Load Bootstrap
+    BootstrapClient;
+
+    // Initialize modal
+    if (typeof window !== "undefined") {
+      const modalElement = document.getElementById("register");
+      if (modalElement) {
+        import("bootstrap").then(({ Modal }) => {
+          setModalInstance(new Modal(modalElement));
+        });
+      }
+    }
+  }, []);
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const isValidEmail = (email) => {
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-  };
-
-  // Password Validation (Min 8 chars, at least one letter & one number)
-  const isValidPassword = (password) => {
-    return /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(password);
-  };
+  const isValidEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  const isValidPassword = (password) =>
+    /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(password);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const { firstName, lastName, email, password } = formData;
-    
+
     if (!firstName.trim() || !lastName.trim()) {
       setErrorMessage("Name is required.");
       return;
@@ -42,21 +62,21 @@ export default function Register() {
     }
 
     if (!isValidPassword(password)) {
-      setErrorMessage("Password must be at least 8 characters long and contain at least one letter and one number.");
+      setErrorMessage(
+        "Password must be at least 8 characters long and contain at least one letter and one number."
+      );
       return;
     }
+
     try {
       await register({
-        name: `${firstName.trim()} ${lastName.trim()}`, // Concatenated name
+        name: `${firstName.trim()} ${lastName.trim()}`,
         email,
         password,
       }).unwrap();
-     
 
-      // Close modal
-      const modalElement = document.getElementById("register");
-      if (modalElement) {
-        const modalInstance = Modal.getInstance(modalElement) || new Modal(modalElement);
+      // Close modal safely
+      if (modalInstance) {
         modalInstance.hide();
       }
 
@@ -67,11 +87,13 @@ export default function Register() {
         confirmButtonColor: "#3085d6",
       });
 
-      // Reset form fields
       setFormData({ firstName: "", lastName: "", email: "", password: "" });
     } catch (err) {
       console.error(err);
-      if (err?.data?.error?.includes("duplicate key error") && err?.data?.error?.includes("email")) {
+      if (
+        err?.data?.error?.includes("duplicate key error") &&
+        err?.data?.error?.includes("email")
+      ) {
         setErrorMessage("Email already exists. Please use another email.");
       } else {
         setErrorMessage("An error occurred. Please try again.");
@@ -80,12 +102,18 @@ export default function Register() {
   };
 
   return (
-    <div className="modal modalCentered fade form-sign-in modal-part-content" id="register">
+    <div
+      className="modal modalCentered fade form-sign-in modal-part-content"
+      id="register"
+    >
       <div className="modal-dialog modal-dialog-centered">
         <div className="modal-content">
           <div className="header">
             <div className="demo-title">Register</div>
-            <span className="icon-close icon-close-popup" data-bs-dismiss="modal" />
+            <span
+              className="icon-close icon-close-popup"
+              data-bs-dismiss="modal"
+            />
           </div>
           <div className="tf-login-form">
             <form onSubmit={handleSubmit}>
@@ -149,14 +177,20 @@ export default function Register() {
                   </button>
                 </div>
                 <div className="w-100">
-                  <a href="#login" data-bs-toggle="modal" className="btn-link fw-6 w-100 link">
+                  <a
+                    href="#login"
+                    data-bs-toggle="modal"
+                    className="btn-link fw-6 w-100 link"
+                  >
                     Already have an account? Log in here
                     <i className="icon icon-arrow1-top-left" />
                   </a>
                 </div>
               </div>
             </form>
-            {error && <p className="error-message text-danger">{error.data?.message}</p>}
+            {error && (
+              <p className="error-message text-danger">{error.data?.message}</p>
+            )}
           </div>
         </div>
       </div>

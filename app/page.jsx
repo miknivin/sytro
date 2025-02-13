@@ -7,7 +7,7 @@ import Topbar1 from "@/components/headers/Topbar4";
 import Brands from "@/components/homes/home-1/Brands";
 
 import Categories from "@/components/homes/home-4/Categories";
-
+import "../public/scss/main.scss";
 import Hero from "@/components/homes/home-4/Hero";
 import Lookbook from "@/components/homes/home-1/Lookbook";
 import Marquee from "@/components/homes/home-4/Marquee";

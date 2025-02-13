@@ -1,6 +1,27 @@
-import React from "react";
+"use client"
+import React, { useEffect } from "react";
 import Link from "next/link";
+import { useMyOrdersQuery } from "@/redux/api/orderApi"; // Adjust the import path based on your project structure
+
 export default function Orders() {
+  const { data , isLoading, isError } = useMyOrdersQuery();
+  const orders = Array.isArray(data?.orders) ? data.orders : [];
+  // Log orders data when available
+  useEffect(() => {
+    if (orders) {
+      console.log("Fetched Orders:", orders);
+    }
+  }, [orders]);
+
+  if (isLoading) {
+    return <p>Loading orders...</p>;
+  }
+
+  if (isError) {
+    console.error("Error fetching orders");
+    return <p>Error loading orders. Please try again later.</p>;
+  }
+
   return (
     <div className="my-account-content account-order">
       <div className="wrap-account-order">
@@ -15,48 +36,32 @@ export default function Orders() {
             </tr>
           </thead>
           <tbody>
-            <tr className="tf-order-item">
-              <td>#123</td>
-              <td>August 1, 2024</td>
-              <td>On hold</td>
-              <td>$200.0 for 1 items</td>
-              <td>
-                <Link
-                  href={`/my-account-orders-details`}
-                  className="tf-btn btn-fill animate-hover-btn rounded-0 justify-content-center"
-                >
-                  <span>View</span>
-                </Link>
-              </td>
-            </tr>
-            <tr className="tf-order-item">
-              <td>#345</td>
-              <td>August 2, 2024</td>
-              <td>On hold</td>
-              <td>$300.0 for 1 items</td>
-              <td>
-                <Link
-                  href={`/my-account-orders-details`}
-                  className="tf-btn btn-fill animate-hover-btn rounded-0 justify-content-center"
-                >
-                  <span>View</span>
-                </Link>
-              </td>
-            </tr>
-            <tr className="tf-order-item">
-              <td>#567</td>
-              <td>August 3, 2024</td>
-              <td>On hold</td>
-              <td>$400.0 for 1 items</td>
-              <td>
-                <Link
-                  href={`/my-account-orders-details`}
-                  className="tf-btn btn-fill animate-hover-btn rounded-0 justify-content-center"
-                >
-                  <span>View</span>
-                </Link>
-              </td>
-            </tr>
+            {orders?.length > 0 ? (
+              orders.map((order) => (
+                <tr key={order.id} className="tf-order-item">
+                  <td>#{order._id}</td>
+                  <td>{new Date(order?.createdAt).toLocaleDateString()}</td>
+                  <td>{order?.orderStatus}</td>
+                  <td>
+                  ₹{order?.totalAmount} for {order?.orderItems.length} items
+                  </td>
+                  <td>
+                    <Link
+                      href={`/my-account-orders-details?orderId=${order.id}`}
+                      className="tf-btn btn-fill animate-hover-btn rounded-0 justify-content-center"
+                    >
+                      <span>View</span>
+                    </Link>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan={5} className="text-center">
+                  No orders found.
+                </td>
+              </tr>
+            )}
           </tbody>
         </table>
       </div>

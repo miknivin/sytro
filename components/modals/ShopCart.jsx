@@ -50,7 +50,7 @@ export default function ShopCart() {
     const cartItem = {
       product: id,
       name: item?.name,
-      price: item?.price,
+      price: item?.offer,
       image: item?.image,
       stock: item?.stock,
       quantity: quantity,

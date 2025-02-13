@@ -16,9 +16,10 @@ import {
   productsPages,
 } from "@/data/menu";
 import { usePathname } from "next/navigation";
-
+import { useSelector } from 'react-redux';
 export default function Nav({ isArrow = true, textColor = "", Linkfs = "" }) {
   const pathname = usePathname();
+  const products = useSelector((state) => state.product.items);
   const isMenuActive = (menuItem) => {
     let active = false;
     if (menuItem.href?.includes("/")) {
@@ -241,7 +242,7 @@ export default function Nav({ isArrow = true, textColor = "", Linkfs = "" }) {
         <div className="sub-menu mega-menu">
           <div className="container">
             <div className="row">
-              {productDetailPages.map((menuItem, index) => (
+              {/* {productDetailPages.map((menuItem, index) => (
                 <div key={index} className="col-lg-2">
                   <div className="mega-menu-item">
                     <div className="menu-heading">{menuItem.heading}</div>
@@ -262,8 +263,8 @@ export default function Nav({ isArrow = true, textColor = "", Linkfs = "" }) {
                     </ul>
                   </div>
                 </div>
-              ))}
-              <div className="col-lg-4">
+              ))} */}
+              <div className="col-lg-12">
                 <div className="menu-heading">Best seller</div>
                 <div className="hover-sw-nav hover-sw-2">
                   <Swiper
@@ -273,17 +274,19 @@ export default function Nav({ isArrow = true, textColor = "", Linkfs = "" }) {
                       prevEl: ".snmpn1",
                       nextEl: ".snmnn1",
                     }}
-                    slidesPerView={2}
+                    slidesPerView={4}
                     spaceBetween={30}
-                    className="swiper tf-product-header wrap-sw-over"
+                    className="swiper tf-product-header wrap-sw-over row"
                   >
-                    {[...products1]
+                    {[...products]
                       .slice(0, 4)
 
                       .map((elm, i) => (
-                        <SwiperSlide key={i} className="swiper-slide">
-                          <ProductCard product={elm} />
-                        </SwiperSlide>
+                        <div >
+                          <SwiperSlide key={i} className="swiper-slide col-lg-4">
+                            <ProductCard product={elm} />
+                          </SwiperSlide>
+                        </div>
                       ))}
                   </Swiper>
                   <div className="nav-sw nav-next-slider nav-next-product-header box-icon w_46 round snmpn1">
@@ -298,7 +301,6 @@ export default function Nav({ isArrow = true, textColor = "", Linkfs = "" }) {
           </div>
         </div>
       </li>
-      
       {/* ------------ */}
       {/* pages */}
       {/* <li className="menu-item position-relative">

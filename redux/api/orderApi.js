@@ -16,7 +16,7 @@ export const orderApi = createApi({
       },
     }),
     myOrders: builder.query({
-      query: () => `/me/orders`,
+      query: () => `/orders/getOrdersByUser`,
     }),
     orderDetails: builder.query({
       query: (id) => `/order/${id}`,

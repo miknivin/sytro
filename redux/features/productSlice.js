@@ -4,6 +4,7 @@ const productsSlice = createSlice({
   name: "products",
   initialState: {
     items: [], 
+    singleProduct: null,
   },
   reducers: {
     setProducts: (state, action) => {
@@ -12,8 +13,14 @@ const productsSlice = createSlice({
     resetProducts: (state) => {
       state.items = []; 
     },
+    setSingleProductForQuickAdd: (state, action) => {
+      state.singleProduct = action.payload; 
+    },
+    resetSingleProduct: (state) => {
+      state.singleProduct = null; 
+    },
   },
 });
 
-export const { setProducts, resetProducts } = productsSlice.actions;
+export const { setProducts, resetProducts, setSingleProductForQuickAdd, resetSingleProduct } = productsSlice.actions;
 export default productsSlice.reducer;
