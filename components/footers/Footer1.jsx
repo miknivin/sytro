@@ -97,7 +97,7 @@ export default function Footer1({ bgColor = "" }) {
                     </li>
                     <li>
                       <p>
-                        Phone: <a href="#">(212) 555-1234</a>
+                        Phone: <a href="tel:+917293333483">+91 72933 33483</a>
                       </p>
                     </li>
                   </ul>
