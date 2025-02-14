@@ -101,7 +101,7 @@ export default function Footer1({ bgColor = "" }) {
                       </p>
                     </li>
                   </ul>
-                  <Link href={`/contact-1`} className="tf-btn btn-line">
+                  <Link href={`/contact-2`} className="tf-btn btn-line">
                     Get direction
                     <i className="icon icon-arrow1-top-left" />
                   </Link>

@@ -8,7 +8,7 @@ export default function Map2() {
         <div className="tf-grid-layout gap-0 lg-col-2">
           <div className="w-100">
             <iframe
-              src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d317859.6089702069!2d-0.075949!3d51.508112!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x48760349331f38dd%3A0xa8bf49dde1d56467!2sTower%20of%20London!5e0!3m2!1sen!2sus!4v1719221598456!5m2!1sen!2sus"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3929.4309075051287!2d76.2765106!3d9.981218799999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3b080d56d60dc6dd%3A0x9285d886d0f7e60a!2sBasin%20Rd%20%26%20Broadway%2C%20Marine%20Drive%2C%20Ernakulam%2C%20Kochi%2C%20Kerala%20682031!5e0!3m2!1sen!2sin!4v1739523560115!5m2!1sen!2sin"
               width="100%"
               height={894}
               style={{ border: 0 }}
@@ -30,7 +30,7 @@ export default function Map2() {
                 <p className="mb_15">
                   <strong>Phone</strong>
                 </p>
-                <p>(623) 934-2400</p>
+                <p>+91 72933 33483</p>
               </div>
               <div className="mb_20">
                 <p className="mb_15">
@@ -38,13 +38,13 @@ export default function Map2() {
                 </p>
                 <p>sytrobags@gmail.com</p>
               </div>
-              <div className="mb_36">
+              {/* <div className="mb_36">
                 <p className="mb_15">
                   <strong>Open Time</strong>
                 </p>
                 <p className="mb_15">Our store has re-opened for shopping,</p>
                 <p>exchange Every day 11am to 7pm</p>
-              </div>
+              </div> */}
               <div>
                 <ul className="tf-social-icon d-flex gap-20 style-default">
                   {socialLinksWithBorder.map((link, index) => (
