@@ -284,7 +284,7 @@ export default function page() {
                 </p>
                 <p style={{ fontSize: "1em", color: "#666", marginBottom: 20 }}>
                   <b>Email:</b> sytrobags@gmail.com <br />
-                  <b>Phone:</b> [insert phone number] <br />
+                  <b>Phone:</b> +91 72933 33483 <br />
                   <b>Address:</b> Panakal tower North Basin Road Broadway
                   Ernakulam, Kochi, Kerala 682031
                 </p>
