@@ -19,23 +19,25 @@ export default function Header4() {
                 <ul className="tf-social-icon d-flex gap-10">
                   <li>
                     <a
-                      href="#"
+                      href="https://www.facebook.com/SYTROBAGS/"
+                      target="_blank"
                       className="box-icon w_34 round social-facebook social-line"
                     >
                       <i className="icon fs-14 icon-fb" />
                     </a>
                   </li>
-                  <li>
+                  {/* <li>
                     <a
                       href="#"
                       className="box-icon w_34 round social-twiter social-line"
                     >
                       <i className="icon fs-12 icon-Icon-x" />
                     </a>
-                  </li>
+                  </li> */}
                   <li>
                     <a
-                      href="#"
+                      href="https://www.instagram.com/sytro_bags/"
+                      target="_blank"
                       className="box-icon w_34 round social-instagram social-line"
                     >
                       <i className="icon fs-14 icon-instagram" />
@@ -88,7 +90,7 @@ export default function Header4() {
             </div>
             <div className="col-xl-5 col-md-4 col-3">
               <ul className="nav-icon d-flex justify-content-end align-items-center gap-20">
-                <li className="nav-search">
+                {/* <li className="nav-search">
                   <a
                     href="#canvasSearch"
                     data-bs-toggle="offcanvas"
@@ -97,18 +99,18 @@ export default function Header4() {
                   >
                     <i className="icon icon-search" />
                   </a>
-                </li>
+                </li> */}
                 <li className="nav-account">
                   <UserIcon />
                 </li>
-                <li className="nav-wishlist">
+                {/* <li className="nav-wishlist">
                   <Link href={`/wishlist`} className="nav-icon-item">
                     <i className="icon icon-heart" />
                     <span className="count-box">
                       <WishlistLength />
                     </span>
                   </Link>
-                </li>
+                </li> */}
                 <li className="nav-cart">
                   <a
                     href="#shoppingCart"

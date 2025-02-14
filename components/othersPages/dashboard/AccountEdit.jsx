@@ -1,123 +1,122 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useUpdateProfileMutation } from "@/redux/api/userApi"; // Adjust path
+import { useSelector } from "react-redux";
+import { useRouter } from "next/navigation";
+import { toast } from "react-hot-toast";
 
 export default function AccountEdit() {
+  const router = useRouter();
+  const [updateProfile, { isLoading, isError, error }] =
+    useUpdateProfileMutation();
+  const auth = useSelector((state) => state.auth);
+
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    phone: "",
+  });
+
+  useEffect(() => {
+    console.log(auth);
+
+    if (!auth.isAuthenticated) {
+      router.push("/");
+    } else if (auth.user) {
+      setFormData({
+        name: auth.user.name || "",
+        email: auth.user.email || "",
+        phone: auth.user.phone || "",
+      });
+    }
+  }, [auth]);
+
+  // Handle Input Changes
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  // Handle Form Submission
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      await updateProfile({
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+      }).unwrap();
+
+      toast.success("Profile updated successfully!");
+    } catch (err) {
+      console.error("Update failed:", err);
+      toast.error("Failed to update profile.");
+    }
+  };
+
   return (
     <div className="my-account-content account-edit">
       <div className="">
-        <form
-          onSubmit={(e) => e.preventDefault()}
-          className=""
-          id="form-password-change"
-          action="#"
-        >
+        <form onSubmit={handleSubmit} className="" id="form-password-change">
           <div className="tf-field style-1 mb_15">
             <input
               className="tf-field-input tf-input"
               placeholder=" "
               type="text"
-              id="property1"
+              id="name"
               required
-              name="first name"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
             />
-            <label
-              className="tf-field-label fw-4 text_black-2"
-              htmlFor="property1"
-            >
-              First name
+            <label className="tf-field-label fw-4 text_black-2" htmlFor="name">
+              Name
             </label>
           </div>
-          <div className="tf-field style-1 mb_15">
-            <input
-              className="tf-field-input tf-input"
-              placeholder=" "
-              type="text"
-              required
-              id="property2"
-              name="last name"
-            />
-            <label
-              className="tf-field-label fw-4 text_black-2"
-              htmlFor="property2"
-            >
-              Last name
-            </label>
-          </div>
+
           <div className="tf-field style-1 mb_15">
             <input
               className="tf-field-input tf-input"
               placeholder=" "
               type="email"
-              autoComplete="abc@xyz.com"
+              autoComplete="email"
               required
-              id="property3"
+              id="email"
               name="email"
+              value={formData.email}
+              onChange={handleChange}
             />
-            <label
-              className="tf-field-label fw-4 text_black-2"
-              htmlFor="property3"
-            >
+            <label className="tf-field-label fw-4 text_black-2" htmlFor="email">
               Email
             </label>
           </div>
-          <h6 className="mb_20">Password Change</h6>
-          <div className="tf-field style-1 mb_30">
+          <div className="tf-field style-1 mb_15">
             <input
               className="tf-field-input tf-input"
               placeholder=" "
-              type="password"
+              type="tel"
               required
-              autoComplete="current-password"
-              id="property4"
-              name="password"
+              id="phone"
+              name="phone"
+              value={formData.phone}
+              onChange={handleChange}
             />
-            <label
-              className="tf-field-label fw-4 text_black-2"
-              htmlFor="property4"
-            >
-              Current password
+            <label className="tf-field-label fw-4 text_black-2" htmlFor="phone">
+              Phone
             </label>
           </div>
-          <div className="tf-field style-1 mb_30">
-            <input
-              className="tf-field-input tf-input"
-              placeholder=" "
-              type="password"
-              id="property5"
-              required
-              autoComplete="current-password"
-              name="password"
-            />
-            <label
-              className="tf-field-label fw-4 text_black-2"
-              htmlFor="property5"
-            >
-              New password
-            </label>
-          </div>
-          <div className="tf-field style-1 mb_30">
-            <input
-              className="tf-field-input tf-input"
-              placeholder=" "
-              type="password"
-              id="property6"
-              required
-              autoComplete="current-password"
-              name="password"
-            />
-            <label
-              className="tf-field-label fw-4 text_black-2"
-              htmlFor="property6"
-            >
-              Confirm password
-            </label>
-          </div>
+          {isError && (
+            <p className="text-red-500">
+              {error?.data?.message || "Update failed"}
+            </p>
+          )}
           <div className="mb_20">
             <button
               type="submit"
               className="tf-btn w-100 radius-3 btn-fill animate-hover-btn justify-content-center"
+              disabled={isLoading}
             >
-              Save Changes
+              {isLoading ? "Saving..." : "Save Changes"}
             </button>
           </div>
         </form>

@@ -73,7 +73,7 @@ export const testimonials2 = [
 
 export const testimonialsData = [
   {
-    imgSrc: "/images/item/tets3.jpg",
+    imgSrc: "/images/item/tets4.jpg",
     alt: "image-product",
     name: "Fathima",
     item: "Mother of twins",
@@ -87,7 +87,7 @@ export const testimonialsData = [
     quote: `"As someone who travels extensively for work, I've gone through numerous bags over the years, but none have matched the durability of Sytro's travel collection. I purchased their Voyager series bag 18 months ago, and it has already accompanied me on over 50 domestic flights and 6 international trips. What impresses me most is how they've thought through every detail - from the perfectly sized laptop compartment to the strategically placed quick-access pockets for travel documents. For a proudly Indian brand to deliver this level of quality at such a competitive price point is remarkable."`,
   },
   {
-    imgSrc: "/images/item/tets4.jpg",
+    imgSrc: "/images/item/tets5.jpg",
     alt: "image-product",
     name: "William",
     item: "Entrepreneur",
@@ -97,14 +97,20 @@ export const testimonialsData = [
 
 export const imagesData = [
   {
-    src: "/images/item/tets3.jpg",
-    alt: "image-product",
+    src: "/images/item/tets4.jpg",
+    alt: "image-testimonial",
     width: 750,
     height: 851,
   },
   {
-    src: "/images/item/tets4.jpg",
-    alt: "image-product",
+    src: "/images/item/tets5.jpg",
+    alt: "image-testimonial",
+    width: 750,
+    height: 851,
+  },
+  {
+    src: "/images/item/tets3.jpg",
+    alt: "image-testimonial",
     width: 750,
     height: 851,
   },
@@ -978,7 +984,7 @@ export const testimonials16 = [
     text: `The attention to detail and quality of materials is exceptional. Every bag I've purchased from Sytro has exceeded my expectations in durability and design. As someone who travels frequently for business meetings, I appreciate how their bags combine professional aesthetics with practical features. The laptop compartment protection and organized sections have made my daily commute much more efficient`,
     authorImg: "/images/item/tets3.jpg",
     authorName: "Sahir Ali",
-    profession:"Entrepreneur"
+    profession: "Entrepreneur",
   },
   {
     quoteSrc: "/images/item/quote.svg",

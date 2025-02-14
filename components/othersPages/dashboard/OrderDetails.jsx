@@ -240,7 +240,7 @@ export default function OrderDetails() {
                       <div className="text-2 fw-6">{item.name}</div>{" "}
                       <div className="mt_4">
                         <span className="fw-6">Price: </span>
-                        {`$${item.price}${
+                        {`₹${item.price}${
                           item.quantity > 1 ? ` * ${item.quantity}` : ""
                         }`}
                       </div>
@@ -251,7 +251,7 @@ export default function OrderDetails() {
                 <ul>
                   <li className="d-flex justify-content-between text-2">
                     <span>Total Price</span>
-                    <span className="fw-6">${orderDetails.totalAmount}</span>
+                    <span className="fw-6">₹{orderDetails.totalAmount}</span>
                   </li>
                   {/* <li className="d-flex justify-content-between text-2 mt_4 pb_8 line">
                     <span>Total Discounts</span>

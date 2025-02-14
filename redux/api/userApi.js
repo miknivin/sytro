@@ -17,7 +17,7 @@ export const userApi = createApi({
           dispatch(setLoading(false));
         } catch (error) {
           dispatch(setLoading(false));
-       //   console.log(error);
+          //   console.log(error);
         }
       },
       providesTags: ["User"],
@@ -25,7 +25,7 @@ export const userApi = createApi({
     updateProfile: builder.mutation({
       query(body) {
         return {
-          url: "/me/update",
+          url: "/auth/updateUser",
           method: "PUT",
           body,
         };

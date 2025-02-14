@@ -27,7 +27,7 @@ const userSchema = new mongoose.Schema(
       sparse: true, // Allows the unique constraint to be ignored if the value is null or undefined
       validate: {
         validator: function (value) {
-          return !this.email || !!value; // Only validate phone if email is not provided
+          return !this.email || !!value; 
         },
         message: "Email or phone is required",
       },

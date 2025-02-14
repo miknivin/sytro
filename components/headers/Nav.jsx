@@ -64,15 +64,15 @@ export default function Nav({ isArrow = true, textColor = "", Linkfs = "" }) {
     <>
       {" "}
       <li className="menu-item">
-        <a
-          href="#"
+        <Link
+          href="/"
           className={`item-link ${Linkfs} ${textColor} ${
             isMenuActive(allHomepages) ? "activeMenu" : ""
           } `}
         >
           Home
           {/* {isArrow ? <i className="icon icon-arrow-down" /> : ""} */}
-        </a>
+        </Link>
         {/* <div className="sub-menu mega-menu">
           <div className="container">
             <div className="row-demo">

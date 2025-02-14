@@ -59,8 +59,10 @@ export default function Testimonials() {
                         />
                       </div>
                       <div className="content">
-                        <div className="name">{testimonial.name} <span className="fs-5">{testimonial.profession}</span></div>
-                        
+                        <div className="name">
+                          {testimonial.name}{" "}
+                          <span className="fs-5">{testimonial.profession}</span>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -77,7 +79,7 @@ export default function Testimonials() {
             </div>
             <div className="d-md-none sw-dots style-2 sw-pagination-tes-2 spd122" />
           </div>
-          {/* <div className="box-right wow fadeInUp" data-wow-delay="0s">
+          <div className="box-right wow fadeInUp" data-wow-delay="0s">
             <Swiper
               dir="ltr"
               slidesPerView={1}
@@ -85,6 +87,8 @@ export default function Testimonials() {
               className="tf-thumb-tes"
               onSwiper={setThumbsSwiper}
               modules={[Thumbs]}
+              allowTouchMove={false} // Disable swipe gestures
+              simulateTouch={false} // Prevent touch simulation
             >
               {imagesData.map((image, index) => (
                 <SwiperSlide key={index}>
@@ -101,7 +105,7 @@ export default function Testimonials() {
                 </SwiperSlide>
               ))}
             </Swiper>
-          </div> */}
+          </div>
         </div>
       </div>
     </section>

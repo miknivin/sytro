@@ -108,23 +108,23 @@ export default function Footer1({ bgColor = "" }) {
                   <ul className="tf-social-icon d-flex gap-10">
                     <li>
                       <a
-                        href="#"
+                        href="https://www.facebook.com/SYTROBAGS/"
                         className="box-icon w_34 round social-facebook social-line"
                       >
                         <i className="icon fs-14 icon-fb" />
                       </a>
                     </li>
-                    <li>
+                    {/* <li>
                       <a
                         href="#"
                         className="box-icon w_34 round social-twiter social-line"
                       >
                         <i className="icon fs-12 icon-Icon-x" />
                       </a>
-                    </li>
+                    </li> */}
                     <li>
                       <a
-                        href="#"
+                        href="https://www.instagram.com/sytro_bags/"
                         className="box-icon w_34 round social-instagram social-line"
                       >
                         <i className="icon fs-14 icon-instagram" />

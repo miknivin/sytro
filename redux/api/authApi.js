@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { userApi } from "./userApi";
+import { setUser, setIsAuthenticated} from "../features/userSlice";
 
 export const authApi = createApi({
   reducerPath: "authApi",
@@ -56,15 +57,29 @@ export const authApi = createApi({
         }
       },
     }),
-    logout: builder.query({
-      query: () => "/logout",
+    logout: builder.mutation({
+      query: () => ({
+        url: "auth/logout",
+        method: "POST",
+      }),
+      async onQueryStarted(args, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+          // ✅ Re-fetch user data to update state after logout
+          const { data } = await dispatch(userApi.endpoints.getMe.initiate(null)).unwrap();
+
+        } catch (error) {
+          console.log(error);
+        }
+      },
     }),
+    
   }),
 });
 
 export const {
   useLoginMutation,
   useRegisterMutation,
-  useLazyLogoutQuery,
+  useLogoutMutation, 
   useGoogleSignInMutation,
 } = authApi;

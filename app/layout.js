@@ -1,5 +1,6 @@
 import ReduxProvider from "@/components/providers/ReduxProvider";
 import ClientWrapper from "@/components/for-layout/ClientWrapper";
+
 import "@/styles/main.scss";
 import "photoswipe/dist/photoswipe.css";
 import "rc-slider/assets/index.css";
