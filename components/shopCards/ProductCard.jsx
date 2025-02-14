@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useContextElement } from "@/context/Context";
 
-import {setSingleProductForQuickAdd} from "@/redux/features/productSlice"
+import { setSingleProductForQuickAdd } from "@/redux/features/productSlice";
 import { useDispatch } from "react-redux";
 export const ProductCard = ({ product }) => {
   const dispatch = useDispatch();
@@ -22,9 +22,9 @@ export const ProductCard = ({ product }) => {
   }, [product]);
 
   return (
-    <div className="card-product fl-item" key={product.id}>
+    <div className="card-product fl-item" key={product._id}>
       <div className="card-product-wrapper">
-        <Link href={`/product-detail/${product.id}`} className="product-img">
+        <Link href={`/product-detail/${product._id}`} className="product-img">
           <Image
             className="lazyload img-product"
             data-src={product.images[0].url}
@@ -55,10 +55,10 @@ export const ProductCard = ({ product }) => {
             href="#quick_add"
             aria-disabled
             disabled
-            onClick={() =>{
+            onClick={() => {
               setQuickAddItem(product._id);
               dispatch(setSingleProductForQuickAdd(product));
-            } }
+            }}
             data-bs-toggle="modal"
             className="box-icon bg_white quick-add tf-btn-loading"
           >
